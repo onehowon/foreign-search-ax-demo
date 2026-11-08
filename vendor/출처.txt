@@ -1,0 +1,7 @@
+Tabler @tabler/core 1.7.1 (npm 게시 2026-10-23) · MIT
+  복사한 파일: tabler.min.css, tabler-themes.min.css (수정 없음)
+  확인 근거: package.json의 license 값 MIT, CSS 머리 저작권 문구, README의 License 항목
+  패키지 안에 LICENSE 파일은 없다. 저작권 문구는 CSS 머리에 그대로 남아 있다.
+Pretendard pretendard 1.3.9 (npm 게시 2023-11-05) · SIL OFL 1.1
+  복사한 파일: PretendardVariable.woff2 (수정 없음), LICENSE.txt (패키지 dist/LICENSE.txt 원본)
+받은 방법: npm pack 후 압축만 풀었다. 설치 스크립트는 실행하지 않았다.
