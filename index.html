@@ -38,52 +38,48 @@ h2{font-size:1.375rem;line-height:1.35;font-weight:700}
 #top{position:sticky;top:0;z-index:10;background:var(--paper)}
 .notice{padding:4px 12px;text-align:center;font-size:.875rem;line-height:1.45;color:var(--mut);background:var(--bg)}
 .wrap{width:100%;max-width:1040px;margin:0 auto;padding-left:16px;padding-right:16px}
-#steps{display:flex;gap:24px}
-#steps a{padding:10px 0 8px;color:var(--mut);text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap}
-#steps a b{font-weight:600}
-#steps a.active b{display:none}
-#steps a:not(.active) span{display:none}
-#steps a:not(.active) b{display:inline-block;min-width:24px;text-align:center}
-#steps a:hover{color:var(--ink)}
-#steps a.active{color:var(--ink);font-weight:700;border-bottom-color:var(--ink)}
-#hint{display:flex;align-items:center;gap:12px;padding-top:8px;padding-bottom:8px;border-top:1px solid var(--line)}
+#bar{display:flex;align-items:center;gap:12px;min-height:48px;padding-top:6px;padding-bottom:6px;border-top:1px solid var(--line)}
+#role{flex:none;padding:2px 10px;border-radius:6px;background:var(--gray-dk);color:#fff;font-weight:700;font-size:.875rem}
 #hintText{flex:1 1 0;min-width:0}
-#hintBtn{flex:none}
 main{flex:1 0 auto}
 #foot{padding:12px 16px;text-align:center;font-size:.875rem;line-height:1.45;color:var(--mut)}
-/* 첫 화면 */
-#intro{padding-top:clamp(24px,6vh,64px);padding-bottom:24px}
-#intro h1{font-size:clamp(1.75rem,4.4vw,2.75rem);line-height:1.3;font-weight:800;margin-bottom:12px}
-#intro .lead{font-size:clamp(1rem,2vw,1.375rem);line-height:1.45;margin-bottom:24px}
-#startBtn{min-height:52px;padding:.75rem 1.5rem}
-#flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(8px,2vw,24px);margin-top:clamp(24px,5vh,48px);padding:0;list-style:none}
-#flow img{display:block;width:100%;height:auto;border-radius:8px;box-shadow:var(--lift);background:var(--paper)}
-#flow span{display:block;margin-top:12px;font-weight:700}
-#flow b{color:var(--mut);margin-right:6px}
-/* 화면 1: 휴대폰 */
-#s1{display:flex;justify-content:center;padding:16px}
-#phone{position:relative;display:flex;flex-direction:column;width:100%;max-width:400px;height:calc(100dvh - var(--hh) - var(--fh) - 32px);min-height:400px;max-height:720px;background:var(--paper);border-radius:20px;box-shadow:var(--lift);overflow:hidden}
+/* 무대: 1막은 휴대폰 하나, 2막은 작은 휴대폰과 담당자 콘솔 */
+#stage{display:flex;justify-content:center;align-items:flex-start;gap:40px;width:100%;max-width:1240px;margin:0 auto;padding:24px 16px}
+#lead{flex:0 1 300px;padding-top:48px}
+#lead h1{font-size:clamp(1.75rem,3vw,2.5rem);line-height:1.3;font-weight:800}
+#phoneCol{flex:none;display:flex;flex-direction:column;gap:16px;width:390px;max-width:100%}
+#phone{position:relative;display:flex;flex-direction:column;width:100%;height:calc(100dvh - var(--hh) - var(--fh) - 48px - 60px);min-height:420px;max-height:760px;background:var(--paper);border-radius:24px;box-shadow:var(--lift);overflow:hidden;transform-origin:top left}
 #ttl{padding:16px 20px 0;font-weight:700}
 #search{display:flex;gap:8px;padding:12px 20px 16px;border-bottom:1px solid var(--line)}
-#q{flex:1 1 0;min-width:0}
-#noRes{padding:12px 20px}
-#noRes h2{margin:24px 0 16px}
-#noQ{display:flex;align-items:center;line-height:1.4;background:var(--bg);border-color:transparent}
-#askBtn{display:block;width:100%}
+#q{flex:1 1 0;min-width:0;background:#FFFFFF;color:var(--ink)}
+#q::placeholder{color:#5C6677;opacity:1}
 #pbody{flex:1 1 0;min-height:0;overflow-y:auto;padding:20px}
-#answer h2{margin-bottom:12px}
+#pbody h2{margin-bottom:12px}
 .prod{margin-bottom:12px}
 .prod b{display:block;font-weight:700}
 .prod p{margin-bottom:12px}
-.prod .btn{display:block;width:100%;margin-top:8px}
+.prod .btn,#askBtn{display:block;width:100%;margin-top:8px}
 #tries{display:grid;gap:8px;margin-top:20px}
 #tries .btn{justify-content:flex-start;text-align:left;font-weight:400}
 #screen{position:absolute;inset:0;background:var(--paper);padding:16px 20px;z-index:2}
 #screen h2{margin:16px 0 8px}
-/* 화면 2: 한 표 */
-#s2{padding-top:16px;padding-bottom:24px}
-#sumBar{position:sticky;top:var(--hh);z-index:5;padding:8px 0;background:var(--bg)}
-#s2 .btn{scroll-margin-top:calc(var(--hh) + 96px)}
+#handBtn{width:100%;min-height:52px}
+#console{flex:1 1 auto;min-width:0;max-width:780px;background:var(--paper);border-radius:16px;box-shadow:var(--lift);padding:24px}
+.act1 #console{display:none}
+.act2 #lead,.act2 #handBtn{display:none}
+.act2 #phoneCol{width:280px}
+.act2 #phone{height:auto;min-height:0}
+.act2 #search,.act2 #tries,.act2 #ttl{display:none}
+.act2 #pbody{flex:none;padding:0}
+#mini{padding:16px 20px 20px}
+#mini .sent{margin-bottom:4px}
+tr.arrived,.quote.arrived{background:var(--ac-lt)}
+.arr{font-weight:700;color:var(--ink)}
+#toList{margin-top:16px}
+#doneBox p{margin-top:4px}
+#again{margin-top:16px}
+#sumBar{position:sticky;top:var(--hh);z-index:5;padding:8px 0;background:var(--paper)}
+#console .btn{scroll-margin-top:calc(var(--hh) + 96px)}
 #counts{font-size:1.375rem;line-height:1.5;font-weight:400}
 #counts b{font-weight:700;padding:0 4px;border-radius:4px;transition:background-color .3s ease-out}
 #counts b.chg{background:var(--ac-lt);color:var(--ink)}
@@ -93,20 +89,20 @@ main{flex:1 0 auto}
 #fixTable th{padding:0 12px 8px 0;font-size:.875rem;font-weight:600;color:var(--mut);text-align:left;border-bottom:1px solid var(--line)}
 #fixTable td{padding:14px 12px 14px 0;vertical-align:top;border-bottom:1px solid var(--line)}
 #fixTable td:last-child{padding-right:0;text-align:right;white-space:nowrap}
+#fixTable .btn{white-space:nowrap}
 .sent{font-weight:600}
 .fixed{color:var(--ink);font-weight:700}
 .exp td{text-align:left!important;white-space:normal!important;padding-top:0!important;background:none}
 .fixbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 tr.open>td{border-bottom:0}
 /* 화면 3: 요청서 한 장 */
-#s3{padding-top:24px;padding-bottom:24px;max-width:712px}
 #ptop{margin-bottom:12px}
 .rowb{display:flex;align-items:center;gap:12px;min-height:56px;padding:12px 8px;color:var(--ink);text-decoration:none;border-top:1px solid var(--line);font-weight:600;scroll-margin:calc(var(--hh) + 8px) 8px 16px}
 .rowb:hover{background:var(--soft);color:var(--ink);text-decoration:none}
 .rowb.next{background:var(--paper);color:var(--ink);border-radius:8px;box-shadow:inset 0 0 0 2px var(--red)}
 .rowb.next:hover{background:var(--soft);color:var(--ink)}
 .rowb span:last-child{margin-left:auto;font-weight:400;white-space:nowrap}
-#paper{background:var(--paper);border-radius:12px;box-shadow:var(--lift);padding:24px}
+#paper{max-width:680px}
 .back{margin-bottom:12px}
 #clMeta{margin:4px 0 12px;color:var(--mut)}
 #flagBox{display:flex;align-items:center;gap:12px;margin-top:16px;font-weight:600}
@@ -135,12 +131,18 @@ details[open]>summary::before{transform:rotate(45deg)}
 .quote{display:flex;align-items:flex-start;gap:8px;padding:8px 0}
 .quote>div{flex:1 1 0;min-width:0}
 #undoBtn{margin-top:16px}
-@media (max-width:640px){
- #steps{gap:20px}
- #s1{padding:0}
- #phone{max-width:none;height:calc(100dvh - var(--hh) - var(--fh));min-height:380px;border-radius:0;box-shadow:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:760px){
+ #stage{display:block;padding:0}
+ #lead{display:none}
+ #phoneCol{width:100%;gap:0}
+ #phone{height:calc(100dvh - var(--hh) - var(--fh) - 68px);min-height:360px;border-radius:0;box-shadow:none}
+ #handBtn{border-radius:0;min-height:60px;margin:0}
+ .act2 #phoneCol{display:none}
+ #console{border-radius:0;box-shadow:none;padding:16px}
  #q{font-size:16px}
- #flow span{font-size:.875rem;margin-top:8px}
+}
+@media (max-width:640px){
  #fixTable thead{display:none}
  #fixTable,#fixTable tbody,#fixTable tr{display:block;width:100%}
  #fixTable tr.frow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:12px 0;border-bottom:1px solid var(--line)}
@@ -150,7 +152,6 @@ details[open]>summary::before{transform:rotate(45deg)}
  #fixTable tr.exp{padding-bottom:12px;border-bottom:1px solid var(--line)}
  #fixTable tr.exp>td{display:block;padding:0;border:0}
  #counts{font-size:1rem}
- #paper{padding:20px 16px}
  #regBtns{grid-template-columns:1fr}
 }
 </style>
@@ -158,35 +159,22 @@ details[open]>summary::before{transform:rotate(45deg)}
 <body>
 <header id="top">
  <p class="notice">현대면세점의 공식 서비스가 아닌 개인 제안 · 사례는 가상</p>
- <div id="nav" hidden>
-  <nav class="wrap" id="steps" aria-label="세 화면"><a id="st1" href="#1"><b>1</b><span>고객이 찾기</span></a><a id="st2" href="#2"><b>2</b><span>담당자가 고치기</span></a><a id="st3" href="#3"><b>3</b><span>요청서 만들기</span></a></nav>
-  <div class="wrap" id="hint" aria-live="polite"><span id="hintText"></span><button class="btn" id="hintBtn"></button></div>
- </div>
+ <div class="wrap" id="bar" aria-live="polite"><span id="role">고객</span><span id="hintText"></span></div>
 </header>
 
-<main id="intro" class="wrap" hidden>
- <h1>자기 말로 찾아도 구매까지 잇습니다.</h1>
- <p class="lead">그래도 못 찾은 요청은 담당자의 개선 근거가 됩니다.</p>
- <a class="btn btn-primary" id="startBtn" href="#1">찾아보기</a>
- <ol id="flow">
-  <li><img src="thumbs/step1.png" width="800" height="520" alt="고객이 이름 없이 설명으로 찾자 Pinehaven Night Serum과 구매 버튼이 나온 화면"><span><b>1</b>찾기</span></li>
-  <li><img src="thumbs/step2.png" width="800" height="520" alt="담당자가 모델 판단을 고치는 표"><span><b>2</b>고치기</span></li>
-  <li><img src="thumbs/step3.png" width="800" height="520" alt="못 찾은 요청으로 만든 요청서 한 장"><span><b>3</b>요청서</span></li>
- </ol>
-</main>
-
-<main id="s1" hidden>
- <div id="phone">
-  <div id="ttl">Sample Duty Free</div>
-  <div id="noRes"><div class="form-control" id="noQ">serum people use before going to sleep, comes in green glass</div><h2>No search results.</h2><a class="btn btn-primary" id="askBtn" data-g="askBtn" href="#1/ask">Search in your own words</a></div>
-  <div id="search"><input id="q" class="form-control" aria-label="Search" placeholder="Describe what you want" maxlength="200" autocomplete="off"><button class="btn btn-primary" id="sendBtn" onclick="send()">Search</button></div>
-  <div id="pbody" lang="en"><div id="answer"></div><div id="tries"></div></div>
-  <div id="screen" hidden></div>
+<main id="stage" class="act1">
+ <div id="lead"><h1>자기 말로 찾아도 구매까지 잇습니다.</h1></div>
+ <div id="phoneCol">
+  <div id="phone" lang="en">
+   <div id="ttl">Sample Duty Free</div>
+   <div id="search"><input id="q" class="form-control" aria-label="Search" placeholder="Search products" maxlength="200" autocomplete="off"><button class="btn btn-primary" id="sendBtn" onclick="send()">Search</button></div>
+   <div id="pbody"></div>
+   <div id="screen" hidden></div>
+  </div>
+  <button class="btn btn-primary" id="handBtn" hidden onclick="handOff()">이 요청은 담당자에게 갑니다</button>
  </div>
+ <section id="console" aria-label="담당자 콘솔"><div id="cBody"></div></section>
 </main>
-
-<main id="s2" class="wrap" hidden></main>
-<main id="s3" class="wrap" hidden></main>
 
 <footer id="foot">저장값은 Qwen2.5 7B(Apache-2.0)를 가상 문장 107건에 돌린 결과입니다. 이 웹은 모델을 실시간으로 돌리지 않습니다. 저장값이 없는 문장은 시험 뒤 고친 규칙으로 처리합니다. 제안 성원호.</footer>
 
@@ -218,17 +206,18 @@ const PRODUCTS={
  kobalt:{name:'Kobalt Moon Mini Set',short:'Kobalt',names:/kobalt|mini set|迷你套装/gi,alias:/travel set|travel kit|mini kit|travel size|旅行小套装|小套装/i,kind:/sets?|kits?|套装/i,token:'kobalt',desc:{en:'Travel-size set that fits a carry-on bag','zh-CN':'可放入随身行李的旅行小套装'}}
 };
 const TXT={
- en:{hello:'What are you looking for?',have:'Is this the one you want?',expr:'Is this what you mean?',notThis:'Not this one',ack:'OK. I passed this to a counselor to check.',
-  gap:'I could not match this to our sale list. I passed it to a counselor to check.',other:'This chat finds products only. I passed your message to a counselor.',unknown:'I am not sure what this is. I passed it to a counselor to check.',
-  buy:'Yes, buy this',back:'Back',sample:'Sample screen. An actual app would open its own buying screen here.'},
- 'zh-CN':{hello:'请问您在找什么商品？',have:'是这款吗？',expr:'您要找的是这款吗？',notThis:'不是这款',ack:'好的，已转给客服确认。',
-  gap:'未能在销售清单中匹配到这款商品，已转给客服确认。',other:'此对话仅用于查找商品，已为您转给客服。',unknown:'暂时无法判断您要找的商品，已转给客服确认。',
-  buy:'是的，购买',back:'返回',sample:'示例画面。实际应用会在此打开自己的购买页面。'}
+ en:{hello:'What are you looking for?',have:'Is this the one you want?',expr:'Is this what you mean?',notThis:'Not this one',ack:'OK. A counselor will check it.',
+  gap:'We could not match this. A counselor will check it.',other:'A counselor will help with this.',unknown:'We are not sure what this is. A counselor will check it.',
+  buy:'Yes, buy this',back:'Back',sample:'Sample screen. An actual app would open its own buying screen here.',none:'No search results.',own:'Search in your own words',found:'1 result'},
+ 'zh-CN':{hello:'请问您在找什么商品？',have:'是这款吗？',expr:'您要找的是这款吗？',notThis:'不是这款',ack:'好的，客服会确认。',
+  gap:'未能匹配到这款商品，客服会确认。',other:'客服会为您处理。',unknown:'暂时无法判断，客服会确认。',
+  buy:'是的，购买',back:'返回',sample:'示例画面。实际应用会在此打开自己的购买页面。',none:'没有搜索结果。',own:'用自己的话搜索',found:'1 个结果'}
 };
-// 고객 예시: 설명 문장, 판매 목록에 없는 상품, 중국어 오타. 모두 모델이 맞힌 저장값이다
-const TRY=['N23','N34','N15'];
-// 담당자 표: 모델이 틀린 두 문장과 맞은 두 문장
-const REPS=['N65','N36','N09','N34'];
+// 고객 예시: 설명 문장, 판매 목록에 없는 상품, 중국어 오기. 모두 모델이 맞힌 저장값이다
+// P12는 조정용 24건에서 골랐다. 판매하지 않는 상품 묶음(Aurora Kelp)에 든 문장이라 담당자 흐름이 이어진다
+const TRY=['N23','P12','N15'];
+// 담당자 표: 방금 들어온 문장 아래에 모델이 틀린 두 문장
+const REPS=['N65','N36'];
 
 // 모델이 만든 묶음과 초안. 담당자 수정본만 여기 적는다
 const CL=[
@@ -249,9 +238,11 @@ const clOf=id=>CL.find(c=>c.id===id);
 const membersOf=id=>DRAFT[id].member_ids;
 const RECUR=['시범 전에 PI, MD 담당자와 비교 대상과 넓힐 기준, 접을 기준을 합의합니다.','4주 동안 같은 표현이 다시 결과 없음으로 나오는지 조치 전과 비교합니다.','합의한 기준으로 넓힐지 접을지 정합니다.'];
 
-let scene=0,sub1='none',opened=false,curCl=null,seq=0,cases=[],fixes={},fixOpen={},excluded={},piState={},noCt={PI:0,MD:0},openedBuy=false,lastQ='',lastTarget=null,prevCounts=null,chg={};
+let act=1,ph='home',q0='',cur=null,curCl=null,cs='fix',seq=0,cases=[],fixes={},fixOpen={},excluded={},added={},piState={},noCt={PI:0,MD:0},lastTarget=null,prevCounts=null,chg={};
 const openD=new Set();
-
+const arrived=()=>cases.find(c=>c.arrived)||null;
+const tgtId=()=>{const t=targetOf(arrived());return t&&!t.add?t.id:(t&&t.add&&added['l'+arrived().id]?t.id:null)};
+const addable=()=>{const t=targetOf(arrived());return!!t&&t.add&&!added['l'+arrived().id]};
 // ───── 규칙: 저장된 모델 결과가 없는 문장만 여기로 온다 ─────
 const NEG=/(\b(?:not|no|never|without|except|don't|doesn't|didn't|isn't)\b(?:\W+\w+){0,3}\W*|\bno longer\b(?:\W+\w+){0,2}\W*|不是|没有|不用|不要)$/i;
 function namedAll(t){return Object.entries(PRODUCTS).filter(([,p])=>[...t.matchAll(p.names)].some(m=>!NEG.test(t.slice(0,m.index)))).map(([k])=>k)}
@@ -281,54 +272,76 @@ function classify(t){
 // 저장된 모델 결과가 있으면 그 값을 쓰고, 없으면 규칙으로 처리한다
 function judge(t){const s=stored(t);return s?{branch:s.m.branch,product:s.m.product_id,ai:s.id}:{...classify(t),ai:null}}
 
+
 // ───── 묶음에 드는 문장 ─────
 const itemOf=id=>{const x=BY_ID[id];return{key:id,id,lang:x.lang,text:x.text,ko:x.ko}};
+const sent=()=>cases.filter(c=>c.sent);
+const keyOf=c=>c.ai||'l'+c.id;
 // 규칙으로 처리한 입력 중 kelp, solstice가 들어간 말은 그 묶음에 넣는다
 function ruleCluster(c){if(c.ai||!['gap','unknown'].includes(c.branch))return null;if(/kelp|海带/i.test(c.text))return'kelp';if(/solstice|至日/i.test(c.text))return'balm';return null}
-function liveFor(id){return cases.filter(c=>ruleCluster(c)===id).map(c=>({key:'l'+c.id,lang:c.lang,text:c.text,ko:null}))}
+const inMembers=c=>c.ai&&CL.find(x=>membersOf(x.id).includes(c.ai));
+// 담당자가 묶음에 넣은 문장과 규칙으로 들어간 문장
+function liveFor(id){return sent().filter(c=>!inMembers(c)&&(ruleCluster(c)===id||added['l'+c.id]===id)).map(c=>({key:'l'+c.id,id:c.ai,lang:c.lang,text:c.text,ko:c.ko}))}
 const movedOut=(x,c)=>excluded[x.key]||(fixes[x.id]&&fixes[x.id].branch!==c.branch);
 function itemsOf(id){const c=clOf(id);return[...liveFor(id).filter(x=>!excluded[x.key]),...membersOf(id).map(itemOf).filter(x=>!movedOut(x,c))]}
 function outOf(id){const c=clOf(id);return[...liveFor(id).filter(x=>excluded[x.key]),...membersOf(id).map(itemOf).filter(x=>movedOut(x,c))]}
 const flagsLeft=id=>itemsOf(id).filter(x=>clOf(id).flags[x.key]);
-// 묶이지 않은 요청: 모델이 따로 둔 문장, 담당자가 옮긴 문장, 방금 넘어온 문장
+// 묶이지 않은 요청: 모델이 따로 둔 문장, 담당자가 옮긴 문장, 고객이 보낸 문장 중 묶음에 없는 것
 function looseItems(){const inCl=new Set(CL.flatMap(c=>membersOf(c.id)));
  const out=AI.loose.map(id=>({...itemOf(id),why:'모델이 따로 둠'}));
  for(const[id,f]of Object.entries(fixes))if(BY_ID[id]&&f.branch==='gap'&&!inCl.has(id))out.push({...itemOf(id),why:'담당자가 고침'});
- for(const c of cases)if(!ruleCluster(c)&&(['gap','unknown'].includes(c.branch)||c.rejected)&&!(c.ai&&inCl.has(c.ai))&&!out.some(x=>(x.id&&x.id===c.ai)||x.text===c.text))out.push({key:'l'+c.id,id:c.ai,lang:c.lang,text:c.text,ko:c.ko,why:c.rejected?'고객이 거절':c.ai?'모델이 따로 둠':'규칙으로 처리'});
+ for(const c of sent())if(!ruleCluster(c)&&!added['l'+c.id]&&!inMembers(c)&&!out.some(x=>(x.id&&x.id===c.ai)||x.text===c.text))out.push({key:'l'+c.id,id:c.ai,lang:c.lang,text:c.text,ko:c.ko,live:c.id,why:c.rejected?'고객이 거절':c.out==='bought'?'고객이 구매':c.ai?'모델이 따로 둠':'규칙으로 처리'});
  return out}
+// 방금 들어온 요청이 갈 묶음. 상품이 Pinehaven이면 담당자가 초록 병 세럼 묶음에 넣을 수 있다
+function targetOf(c){if(!c)return null;const m=inMembers(c);if(m)return{id:m.id};const r=ruleCluster(c);if(r)return{id:r};if(added['l'+c.id])return{id:added['l'+c.id]};const p=fixes[keyOf(c)]?fixes[keyOf(c)].product:c.sp;if(p==='pine'&&(fixes[keyOf(c)]?fixes[keyOf(c)].branch:c.sb)!=='other')return{id:'syn',add:true};return null}
+const isArrivedItem=i=>{const a=arrived();return!!a&&(i.key==='l'+a.id||(!!a.ai&&i.id===a.ai))};
+function addTo(cid,id){added['l'+cid]=id;draw()}
 
-// ───── 화면 1: 고객이 찾기 ─────
-// 마지막 입력이 저장값도 판매 상품도 아닌가. 실제 브랜드를 넣으면 여기로 온다
-const lastMiss=()=>{const c=cases[0];return!!c&&!c.ai&&!c.sp&&c.sb!=='other'};
-const lastKorean=()=>/[가-힣]/.test(lastQ.replace(/\[(여권번호|카드번호)\]/g,''));
-function tryQ(i){const x=BY_ID[TRY[i]];$('q').value=x.text;ask(x.text)}
-function send(){const v=$('q').value.trim();if(v)ask(v)}
-function ask(raw){const t=mask(raw),l=/[㐀-鿿]/.test(t)?'zh-CN':'en',X=TXT[l],r=judge(t),s=r.ai?BY_ID[r.ai]:null;
- $('q').value=t;$('q').blur();lastQ=t;
+// ───── 1막: 고객 휴대폰 ─────
+const lastKorean=()=>/[가-힣]/.test(q0.replace(/\[(여권번호|카드번호)\]/g,''));
+const isMiss=c=>!!c&&!c.ai&&!c.sp&&c.sb!=='other';
+const langOfText=t=>/[㐀-鿿]/.test(t)?'zh-CN':'en';
+function tryQ(i){search(BY_ID[TRY[i]].text)}
+function send(){const v=$('q').value.trim();if(v)search(v)}
+// 기존 검색: 판매 상품 이름이 그대로 들어 있을 때만 찾는다. 나머지는 결과 없음
+function search(raw){const t=mask(raw);q0=t;$('q').value=t;$('q').blur();$('screen').hidden=true;cur=null;
+ const r=classify(t);ph=r.branch==='have'?'found':'none';if(ph==='found')cur={plain:true,product:r.product,lang:langOfText(t)};draw()}
+// 자기 말로 다시 찾기: 저장된 모델 출력, 없으면 규칙
+function ask(){const t=q0,l=langOfText(t),r=judge(t),s=r.ai?BY_ID[r.ai]:null;
  const c={id:++seq,lang:l,text:t,ko:s?s.ko:null,branch:r.branch,product:r.product,ai:r.ai,sb:r.branch,sp:r.product};
- cases.unshift(c);
- const src=`<p class="src" id="srcNote" lang="ko">${r.ai?SRC_AI:SRC_RULE}</p>`;
- $('pbody').lang=l;
- if(r.product&&(r.branch==='have'||r.branch==='expr')){const p=PRODUCTS[r.product];
-  $('answer').innerHTML=`<h2>${esc(X[r.branch])}</h2><div class="prod"><b>${esc(p.name)}</b><p>${esc(p.desc[l])}</p><button class="btn" data-g="buy" onclick="openScreen('${r.product}','${l}')">${esc(X.buy)}</button><button class="btn" data-g="not" onclick="notThis(${c.id},'${l}')">${esc(X.notThis)}</button></div>${src}`}
- else $('answer').innerHTML=`<h2>${esc(X[r.branch])}</h2><p class="src" id="handNote" lang="ko">${HAND}</p>${src}`;
- $('pbody').scrollTop=0;draw()}
-function notThis(id,l){const c=cases.find(x=>x.id===id);if(!c||c.rejected)return;c.rejected=true;const src=$('srcNote').outerHTML;$('answer').innerHTML=`<h2>${esc(TXT[l].ack)}</h2><p class="src" id="handNote" lang="ko">${HAND}</p>${src}`;draw()}
-function openScreen(k,l){const X=TXT[l],p=PRODUCTS[k];openedBuy=true;$('screen').lang=l;$('screen').innerHTML=`<button class="btn" id="screenBack" onclick="closeScreen()">${esc(X.back)}</button><h2>${esc(p.name)}</h2><p>${esc(p.desc[l])}</p><p class="src">${esc(X.sample)}</p>`;$('screen').hidden=false;draw()}
+ if(!(r.product&&(r.branch==='have'||r.branch==='expr')))c.out='handed';
+ cases.unshift(c);cur=c;ph='answer';draw()}
+function notThis(){if(!cur||cur.out)return;cur.rejected=true;cur.out='rejected';draw()}
+function openScreen(){if(!cur)return;const X=TXT[cur.lang],p=PRODUCTS[cur.product||cur.sp];if(!cur.plain&&!cur.out)cur.out='bought';$('screen').lang=cur.lang;$('screen').innerHTML=`<button class="btn" id="screenBack" onclick="closeScreen()">${esc(X.back)}</button><h2>${esc(p.name)}</h2><p>${esc(p.desc[cur.lang])}</p><p class="src">${esc(X.sample)}</p>`;$('screen').hidden=false;draw()}
 function closeScreen(){$('screen').hidden=true;draw()}
-function drawTries(){
- const hello=cases.length?'':`<h2 id="hello">${esc(TXT.en.hello)}</h2>`;
- if(!cases.length)$('answer').innerHTML=hello;
- const miss=lastMiss();
- const used=i=>!miss&&cases.some(c=>c.ai===TRY[i]);
- $('tries').innerHTML=TRY.map((id,i)=>used(i)?'':`<button class="btn" data-g="chip${i}" lang="${BY_ID[id].lang}" onclick="tryQ(${i})">${esc(BY_ID[id].text)}</button>`).join('')}
+const OUT_KO={bought:'고객이 구매',rejected:'고객이 거절 · '+HAND,handed:HAND};
+function phoneBody(){
+ if(act===2){const c=arrived();return c?`<div id="mini"><div class="sent" lang="${c.lang}">${esc(c.text)}</div>${cs==='fix'?`<div class="src" id="miniOut">${esc(OUT_KO[c.out]||'')}</div>`:''}</div>`:''}
+ const tries=`<div id="tries">${TRY.map((id,i)=>`<button class="btn" data-g="chip${i}" lang="${BY_ID[id].lang}" onclick="tryQ(${i})">${esc(BY_ID[id].text)}</button>`).join('')}</div>`;
+ if(ph==='home')return`<h2 id="hello">${esc(TXT.en.hello)}</h2>${tries}`;
+ const l=langOfText(q0),X=TXT[l];
+ if(ph==='found'){const p=PRODUCTS[cur.product];return`<h2 lang="${l}">${esc(X.found)}</h2><div class="prod"><b>${esc(p.name)}</b><p lang="${l}">${esc(p.desc[l])}</p><button class="btn" data-g="buy" onclick="openScreen()">${esc(X.buy)}</button></div>${tries}`}
+ if(ph==='none')return`<h2 lang="${l}">${esc(X.none)}</h2><button class="btn" id="askBtn" data-g="askBtn" onclick="ask()">${esc(TXT.en.own)}</button>${tries}`;
+ const c=cur,src=`<p class="src" id="srcNote" lang="ko">${c.ai?SRC_AI:SRC_RULE}</p>`;
+ if(c.rejected)return`<h2 lang="${l}">${esc(X.ack)}</h2><p class="src" id="handNote" lang="ko">${HAND}</p>${src}${tries}`;
+ if(c.out==='handed')return`<h2 lang="${l}">${esc(X[c.sb])}</h2><p class="src" id="handNote" lang="ko">${HAND}</p>${src}${tries}`;
+ const p=PRODUCTS[c.sp];
+ return`<h2 lang="${l}">${esc(X[c.sb])}</h2><div class="prod"><b>${esc(p.name)}</b><p lang="${l}">${esc(p.desc[l])}</p><button class="btn" data-g="buy" onclick="openScreen()">${esc(X.buy)}</button>${c.out?'':`<button class="btn" data-g="not" onclick="notThis()">${esc(X.notThis)}</button>`}</div>${src}${tries}`}
+// 넘어가는 순간: 휴대폰이 왼쪽으로 작아지고 콘솔이 오른쪽에서 열린다
+function handOff(){if(!cur||cur.plain||!cur.out)return;for(const c of cases)c.arrived=false;cur.sent=true;cur.arrived=true;location.hash='#2'}
+function again(){cur=null;ph='home';q0='';$('q').value='';$('screen').hidden=true;location.hash='#1'}
+let motionFrom=null;
+function animateAct(){const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;const f=motionFrom;motionFrom=null;if(reduce||!f)return;
+ const e='cubic-bezier(.16,1,.3,1)',p=$('phone'),l=p.getBoundingClientRect();
+ if(l.width&&f.width){p.animate([{transform:`translate(${f.left-l.left}px,${f.top-l.top}px) scale(${f.width/l.width})`},{transform:'none'}],{duration:300,easing:e})}
+ $('console').animate([{opacity:0,transform:'translateX(40px)'},{opacity:1,transform:'none'}],{duration:300,easing:e})}
 
-// ───── 화면 2: 담당자가 고치기 ─────
 const label=(b,p)=>p?`${PRODUCTS[p].short} ${b==='have'?'이름으로 찾음':'제안'}`:BR[b];
 const fullValue=(b,p)=>BR[b]+(p?` · ${PRODUCTS[p].name}`:'');
-function rowsForFix(){const seen=new Set(REPS);const live=[];
- for(const c of cases){const k=c.ai||'l'+c.id;if(TRY.includes(c.ai)&&!c.rejected)continue;if(seen.has(k)||(!c.ai&&live.some(r=>r.text===c.text)))continue;seen.add(k);live.push(c.ai?{key:c.ai,...BY_ID[c.ai],just:true}:{key:k,just:true,lang:c.lang,text:c.text,ko:null,rule:{branch:c.branch,product:c.product}})}
- return[...live,...REPS.map(id=>({key:id,...BY_ID[id]}))]}
+// 고객이 보낸 문장이 위, 가장 최근 것이 맨 위
+function rowsForFix(){const live=[],seen=new Set();
+ for(const c of sent()){const k=keyOf(c);if(seen.has(k))continue;seen.add(k);live.push(c.ai?{key:k,...BY_ID[c.ai],just:true,arr:c.arrived}:{key:k,just:true,arr:c.arrived,lang:c.lang,text:c.text,ko:null,rule:{branch:c.sb,product:c.sp}})}
+ return[...live,...REPS.filter(id=>!seen.has(id)).map(id=>({key:id,...BY_ID[id]}))]}
 function curOf(r){const f=fixes[r.key];if(f)return f;return r.m?{branch:r.m.branch,product:r.m.product_id}:{branch:r.rule.branch,product:r.rule.product}}
 function countsOf(rows){const n={prod:0,gap:0,other:0};for(const r of rows){const c=curOf(r);if(c.product)n.prod++;else if(c.branch==='gap')n.gap++;else n.other++}return n}
 function setFix(key,branch,product){fixes[key]={branch,product};delete fixOpen[key];for(const c of cases)if(c.ai===key||'l'+c.id===key){c.branch=branch;c.product=product}draw()}
@@ -337,17 +350,19 @@ function toggleFix(key){fixOpen[key]=!fixOpen[key];draw()}
 function fixRow(r){const k=r.key,f=fixes[k],open=fixOpen[k],base=r.m?{b:r.m.branch,p:r.m.product_id}:{b:r.rule.branch,p:r.rule.product};
  const rej=cases.some(c=>(c.ai===k||'l'+c.id===k)&&c.rejected);
  const opts=[['gap','판매 안 함',null],['other','다른 문의',null],...(base.p?[]:Object.entries(PRODUCTS).map(([p,v])=>['expr',v.short+' 제안',p]))].filter(o=>!(o[0]===base.b&&!base.p));
- return `<tr class="frow ${open?'open':''}" id="row-${k}"><td><div class="sent" lang="${r.lang}">${esc(r.text)}</div>${r.just?'<div class="src">방금 찾은 문장</div>':''}</td>
+ return `<tr class="frow ${open?'open':''} ${r.arr?'arrived':''}" id="row-${k}"><td><div class="sent" lang="${r.lang}">${esc(r.text)}</div>${r.arr?'<div class="arr" id="arrTag">방금 들어옴</div>':''}</td>
   <td><div class="${f?'src':''}" id="mdl-${k}">${f?(r.m?'모델 ':'규칙 '):''}${esc(label(base.b,base.p))}</div>${f?`<div class="fixed" id="fixed-${k}">담당자가 고침: ${esc(label(f.branch,f.product))}</div>`:''}${r.m?'':`<div class="src">${SRC_RULE}</div>`}${rej?`<div class="src">고객이 거절 · ${HAND}</div>`:''}</td>
   <td>${f?`<button class="btn" data-g="unfix-${k}" onclick="undoFix('${k}')">되돌리기</button>`:`<button class="btn" data-g="open-${k}" aria-expanded="${!!open}" onclick="toggleFix('${k}')">${open?'닫기':'고치기'}</button>`}</td></tr>
   ${open?`<tr class="exp" id="exp-${k}"><td colspan="3">${r.ko?`<div>${esc(r.ko)}</div>`:''}<div class="src">${r.m?'모델 저장값':'현재 규칙'} ${esc(fullValue(base.b,base.p))}${r.r?` · 시험 당시 규칙 ${esc(fullValue(r.r.branch,r.r.product_id))}`:''}</div><div class="fixbar">${opts.map(([b,t,p])=>`<button class="btn" data-g="fix-${k}-${p||b}" onclick="setFix('${k}','${b}',${p?`'${p}'`:'null'})">${esc(t)}</button>`).join('')}</div></td></tr>`:''}`}
 function drawFix(){const rows=rowsForFix(),n=countsOf(rows),out=outOf('syn').length;
  if(prevCounts)for(const k of Object.keys(n))if(prevCounts[k]!==n[k])chg[k]=1;prevCounts=n;
  const b=(k,id)=>`<b id="${id}" class="${chg[k]?'chg':''}">${n[k]}</b>`;
- $('s2').innerHTML=`<div id="sumBar"><h2 id="counts" aria-live="polite">상품 제안 ${b('prod','nProd')} · 판매 안 함 ${b('gap','nGap')} · 다른 문의 ${b('other','nOther')}</h2>
+ $('cBody').innerHTML=`<div id="sumBar"><h2 id="counts" aria-live="polite">상품 제안 ${b('prod','nProd')} · 판매 안 함 ${b('gap','nGap')} · 다른 문의 ${b('other','nOther')}</h2>
   ${out?`<p id="linkLine">초록 병 세럼 요청서 근거 ${itemsOf('syn').length}건, ${out}건 뺌</p>`:''}</div>
   <p class="src" id="srcLine">고객에게 나간 뒤 검토 · ${SRC_AI}</p>
-  <table id="fixTable"><thead><tr><th aria-label="문장"></th><th>모델 판단</th><th aria-label="고치기"></th></tr></thead><tbody id="fixList">${rows.map(fixRow).join('')}</tbody></table>`}
+  <table id="fixTable"><thead><tr><th aria-label="문장"></th><th>모델 판단</th><th aria-label="고치기"></th></tr></thead><tbody id="fixList">${rows.map(fixRow).join('')}</tbody></table>
+  <a class="btn" id="toList" data-g="toList" href="#2/list">다음: 묶음 보기</a>`}
+
 
 // ───── 화면 3: 요청서 만들기 ─────
 const stateOf=id=>piState[id]=piState[id]||{draft:{...clOf(id).fix}};
@@ -357,7 +372,7 @@ const PRS=['높음','보통','낮음'];
 // 고르면 이유 칸이 펴지고 건수를 적은 후보 문장이 들어간다. 담당자가 고쳐 쓴다
 function setPr(p){const v=stateOf(curCl);if(!v.seen)return;v.pr=p;if(v.reason===undefined)v.reason=`가상 문장 ${itemsOf(curCl).length}건 기준입니다. 실제 건수를 채운 뒤 확정합니다.`;openD.add(curCl+'-reason');draw()}
 const det=(k,sum,body)=>`<details data-k="${k}" ${openD.has(k)?'open':''}><summary><span>${sum}</span></summary><div class="dbody">${body}</div></details>`;
-function setPi(st,force){if(!canReg(curCl)||isReg(curCl))return;const v=stateOf(curCl);if(!force&&st!==clOf(curCl).reg){v.ask=st;draw();return}delete v.ask;noCt[st]++;v.status=st;v.no=st+'-'+noCt[st];v.snap=itemsOf(curCl).length;if(st==='MD')openD.add(curCl+'-md');draw();scrollTo(0,0)}
+function setPi(st,force){if(!canReg(curCl)||isReg(curCl))return;const v=stateOf(curCl);if(!force&&st!==clOf(curCl).reg){v.ask=st;draw();return}delete v.ask;noCt[st]++;v.status=st;v.no=st+'-'+noCt[st];v.snap=itemsOf(curCl).length;v.from=arrived()?arrived().id:null;v.fixN=Object.keys(fixes).length;if(st==='MD')openD.add(curCl+'-md');draw();scrollTo(0,0)}
 function cancelAsk(){delete stateOf(curCl).ask;draw()}
 function undoPi(){const v=piState[curCl];if(v){delete v.status;delete v.no;delete v.snap}draw()}
 function drop(k){excluded[k]=true;draw()}
@@ -371,24 +386,26 @@ function meta(items,c){return `요청 ${items.length}건(가상) · ${c.branch==
 function langOf(items){const en=items.filter(x=>x.lang==='en').length;return `영어 ${en} · 중국어 ${items.length-en}`}
 function drawList(){
  const loose=looseItems(),total=CL.reduce((n,c)=>n+itemsOf(c.id).length,0)+loose.length;
- $('s3').innerHTML=`<h2 id="ptop">못 찾은 요청 ${total}건(가상)</h2>
-  ${[['expr','판매 중 · PI 요청서'],['gap','판매 안 함 · MD 검토']].map(([br,t])=>`<h3 class="grp">${t}</h3>${CL.filter(c=>c.branch===br).map(c=>`<a class="rowb" data-g="row-${c.id}" href="#3/${c.id}"><span>${esc(c.title)}</span><span class="rowCount">${isReg(c.id)?piState[c.id].no+' · ':''}${itemsOf(c.id).length}건</span></a>`).join('')}`).join('')}
-  ${det('loose',`묶이지 않음 ${loose.length}건`,`<div id="looseList">${loose.map(i=>`<div class="quote"><div><div lang="${i.lang}">${esc(i.text)}</div>${i.ko?`<div class="src">${esc(i.ko)}</div>`:''}<div class="src">${esc(i.why)}</div></div></div>`).join('')}</div><p class="src" id="clNote">모델이 가상 문장 ${AI.cluster.input_n}건을 ${AI.cluster.group_n}개로 묶은 시험 기록 가운데 초안을 만든 3개를 위에 두었습니다.</p><p class="src" id="srcList">${SRC_AI}</p>`)}`}
+ $('cBody').innerHTML=`<a class="btn back" href="#2" data-g="toFix">판단 표</a><h2 id="ptop">못 찾은 요청 ${total}건(가상)</h2>
+  ${[['expr','판매 중 · PI 요청서'],['gap','판매 안 함 · MD 검토']].map(([br,t])=>`<h3 class="grp">${t}</h3>${CL.filter(c=>c.branch===br).map(c=>`<a class="rowb" data-g="row-${c.id}" href="#2/${c.id}"><span>${esc(c.title)}</span><span class="rowCount">${tgtId()===c.id?'<b class="arr">방금 들어옴</b> · ':''}${isReg(c.id)?piState[c.id].no+' · ':''}${itemsOf(c.id).length}건</span></a>`).join('')}`).join('')}
+  ${det('loose',`묶이지 않음 ${loose.length}건`,`<div id="looseList">${loose.map(i=>`<div class="quote ${isArrivedItem(i)?'arrived':''}"><div><div lang="${i.lang}">${esc(i.text)}</div>${i.ko?`<div class="src">${esc(i.ko)}</div>`:''}<div class="src">${isArrivedItem(i)?'방금 들어옴 · ':''}${esc(i.why)}</div></div>${i.live&&isArrivedItem(i)&&addable()?`<button class="btn" data-g="add-${i.live}" onclick="addTo(${i.live},'syn')">초록 병 세럼에 넣기</button>`:''}</div>`).join('')}</div><p class="src" id="clNote">모델이 가상 문장 ${AI.cluster.input_n}건을 ${AI.cluster.group_n}개로 묶은 시험 기록 가운데 초안을 만든 3개를 위에 두었습니다.</p><p class="src" id="srcList">${SRC_AI}</p>`)}`}
 function draftDiff(c){const d=DRAFT[c.id],p=d.parsed,rv=d.review,prob=[...rv.fact_added,...rv.language,...rv.evidence];
  return det(c.id+'-draft','모델 초안',`<p class="src">${SRC_AI}</p><p class="mt-2"><span id="rawTitle">${esc(p.title)}</span></p><p class="mt-1" id="rawSummary">${esc(p.summary)}</p><p class="mt-1" id="rawAsk">${esc(p.ask_owner)}</p><p class="mt-2 fw-bold">담당자가 고친 까닭</p><ul id="draftProb">${prob.map(x=>`<li>${esc(plainNote(x))}</li>`).join('')}${c.labelHidden?'<li>모델이 붙인 묶음 이름에 입력에 없는 실제 브랜드가 나와 가렸습니다</li>':`<li>모델이 붙인 묶음 이름: ${esc(AI.cluster.labels[c.id])}</li>`}</ul>`)}
-function quoteList(c,items,out){return det(c.id+'-quote',`근거 ${items.length}건`,`<div id="sec-voice"><p class="src" id="langLine">${langOf(items)}</p>${items.map(i=>`<div class="quote"><div><div lang="${i.lang}">${esc(i.text)}</div>${i.ko?`<div class="src">${esc(i.ko)}</div>`:''}${c.flags[i.key]?`<div class="fixed">${esc(c.flags[i.key])}</div>`:''}</div><button class="btn" data-g="drop-${i.key}" onclick="drop('${i.key}')">빼기</button></div>`).join('')}${out.map(i=>`<div class="quote"><div><div class="src">뺀 문장</div><div lang="${i.lang}">${esc(i.text)}</div></div><button class="btn undo" data-g="undrop-${i.key}" onclick="undrop('${i.key}')">되돌리기</button></div>`).join('')}</div>`)}
+function quoteList(c,items,out){return det(c.id+'-quote',`근거 ${items.length}건`,`<div id="sec-voice"><p class="src" id="langLine">${langOf(items)}</p>${items.map(i=>`<div class="quote ${isArrivedItem(i)?'arrived':''}"><div><div lang="${i.lang}">${esc(i.text)}</div>${isArrivedItem(i)?'<div class="arr">방금 들어옴</div>':''}${i.ko?`<div class="src">${esc(i.ko)}</div>`:''}${c.flags[i.key]?`<div class="fixed">${esc(c.flags[i.key])}</div>`:''}</div><button class="btn" data-g="drop-${i.key}" onclick="drop('${i.key}')">빼기</button></div>`).join('')}${out.map(i=>`<div class="quote"><div><div class="src">뺀 문장</div><div lang="${i.lang}">${esc(i.text)}</div></div><button class="btn undo" data-g="undrop-${i.key}" onclick="undrop('${i.key}')">되돌리기</button></div>`).join('')}</div>`)}
 const LATER=[['realZero','실제 결과 없음 건수'],['realBuy','구매 화면 연결 건수'],['owner','담당'],['due','배포 뒤 확인일']];
 const laterLabel=(k,l)=>k==='realBuy'&&clOf(curCl).branch==='gap'?'같은 요청이 다시 나온 건수':l;
 const laterInputs=v=>LATER.map(([k,l])=>`<label class="form-label">${laterLabel(k,l)}<input class="form-control" id="f-${k}" maxlength="60" placeholder="담당자 입력" value="${esc(v[k]||'')}" oninput="setField('${k}',this)" ${blurMask}></label>`).join('');
 function inputsFor(c,v){return det(c.id+'-input','입력',`<label class="form-label">제목<input class="form-control" id="dfTitle" maxlength="80" value="${esc(v.draft.title)}" oninput="setDraft('title',this)" ${blurMask}></label><label class="form-label">요약<textarea class="form-control" id="dfSummary" rows="3" maxlength="200" oninput="setDraft('summary',this)" ${blurMask}>${esc(v.draft.summary)}</textarea></label>${laterInputs(v)}`)}
 function drawSheet(c){const v=stateOf(c.id),items=itemsOf(c.id),out=outOf(c.id),flags=flagsLeft(c.id),ok=canReg(c.id);
  if(v.status){const md=k=>`<label class="form-label">${k[1]}<input class="form-control" id="md-${k[0]}" maxlength="60" placeholder="MD 입력" value="${esc(v['md_'+k[0]]||'')}" oninput="setMd('${k[0]}',this)" ${blurMask}></label>`;
-  $('s3').innerHTML=`<a class="btn back" href="#3" data-g="back">목록</a><div id="paper"><h2 id="clTitle"><span class="fixed" id="piNo">${esc(v.no)}</span> ${esc(v.draft.title)}</h2><p id="clMeta">요청 ${v.snap}건(가상) · 잠정 우선순위 ${esc(v.pr)}</p><p id="recur">재발 확인: 시범 전 합의 기준으로 4주 비교</p>
-   ${det(c.id+'-recur','재발 절차',`<ol id="recurSteps">${RECUR.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>`)}
-   ${v.status==='MD'?det(c.id+'-md','MD 항목',`<div id="mdItems">${[['supply','공급 조건'],['zone','판매 구역'],['alt','비슷한 상품 구매']].map(md).join('')}<p>요청 수만으로 입점을 정하지 않습니다.</p></div>`):''}
-   ${det(c.id+'-later',`채울 칸 <span id="laterCount">${LATER.filter(([x])=>!(v[x]||'').trim()).length}</span>개`,laterInputs(v))}
-   <button class="btn" id="undoBtn" onclick="undoPi()">취소</button></div>`;return}
- $('s3').innerHTML=`<a class="btn back" href="#3" data-g="back">목록</a><div id="paper"><h2 id="clTitle">${esc(v.draft.title)}</h2><p id="clMeta">${meta(items,c)}</p><p id="clSummary">${esc(v.draft.summary)}</p>
+  const fromC=cases.find(x=>x.id===v.from);
+  const undo=`<button class="btn" id="undoBtn" onclick="undoPi()">등록 취소</button>`;
+  $('cBody').innerHTML=`<a class="btn back" href="#2/list" data-g="back">목록</a><div id="paper"><h2 id="clTitle"><span class="fixed" id="piNo">${esc(v.no)}</span> ${v.status==='PI'?'요청서':'검토'}로 보냈습니다</h2><p id="clMeta">${esc(v.draft.title)} · ${v.snap}건 · 우선순위 ${esc(v.pr)}</p>
+   <div id="doneBox">${fromC?`<p id="done1">고객 「<span lang="${fromC.lang}">${esc(fromC.text)}</span>」</p>`:''}<p id="done2">${v.fixN?`판단 ${v.fixN}건을 고쳤습니다.`:'판단을 확인했습니다.'}</p></div>
+   ${det(c.id+'-recur','<span id="recur">재발 확인: 시범 전 합의 기준으로 4주 비교</span>',`<ol id="recurSteps">${RECUR.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>${undo}`)}
+   ${v.status==='MD'?det(c.id+'-md','MD 항목',`<div id="mdItems">${[['supply','공급 조건'],['zone','판매 구역'],['alt','대신 산 상품']].map(md).join('')}<p>요청 수만으로 입점을 정하지 않습니다.</p></div>`):det(c.id+'-later',`채울 칸 <span id="laterCount">${LATER.filter(([x])=>!(v[x]||'').trim()).length}</span>개`,laterInputs(v))}
+   <a class="btn" id="again" data-g="again" href="#" onclick="again();return false">다시 고객으로 해 보기</a></div>`;return}
+ $('cBody').innerHTML=`<a class="btn back" href="#2/list" data-g="back">목록</a><div id="paper"><h2 id="clTitle">${esc(v.draft.title)}</h2><p id="clMeta">${meta(items,c)}</p><p id="clSummary">${esc(v.draft.summary)}</p>
   ${flags.length?`<div id="flagBox"><span>섞인 문장 ${flags.length}건</span><button class="btn" data-g="dropwrong" onclick="dropAll()">빼기</button></div>`:''}
   ${quoteList(c,items,out)}
   <div id="prRow"><span>잠정 우선순위</span><div id="prBtns" role="group" aria-label="잠정 우선순위">${PRS.map(p=>`<button class="btn ${v.pr===p?'on':''}" aria-pressed="${v.pr===p}" data-g="pr-${p}" ${v.seen?'':'disabled'} onclick="setPr('${p}')">${p}</button>`).join('')}</div></div>
@@ -396,32 +413,36 @@ function drawSheet(c){const v=stateOf(c.id),items=itemsOf(c.id),out=outOf(c.id),
   <div id="regBtns"><button class="btn" data-g="reg-PI" ${ok?'':'disabled'} onclick="setPi('PI')">PI 요청서</button><button class="btn" data-g="reg-MD" ${ok?'':'disabled'} onclick="setPi('MD')">MD 검토</button></div>
   ${v.ask?`<div id="offBox"><span>${c.branch==='expr'?'판매 중인 상품입니다. 그래도 MD로 보낼까요?':'판매하지 않는 상품입니다. 그래도 PI로 보낼까요?'}</span><button class="btn" data-g="force" onclick="setPi('${v.ask}',true)">보내기</button><button class="btn" data-g="offNo" onclick="cancelAsk()">취소</button></div>`:''}
   ${draftDiff(c)}${det(c.id+'-check','확인 항목',`<p class="mb-1" id="reqAsk">${esc(v.draft.ask)}</p><ul id="reqCheck">${c.check.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`)}${inputsFor(c,v)}</div>`}
-function drawThree(){const c=clOf(curCl);if(c)drawSheet(c);else drawList()}
 
-// ───── 다음 행동 한 줄 ─────
 // 무엇을 빼야 하는지 말한다. 예: 섞인 주문 문의 1건을 먼저 빼세요.
 const FLAG_KIND=r=>/주문/.test(r)?'주문 문의':/지시문/.test(r)?'지시문':/철자/.test(r)?'다른 상품':'문장';
 function flagHint(c){const f=flagsLeft(c.id),n={};for(const x of f){const k=FLAG_KIND(c.flags[x.key]);n[k]=(n[k]||0)+1}const ks=Object.keys(n);
  return ks.length===1?`섞인 ${ks[0]} ${f.length}건을 먼저 빼세요.`:`섞인 문장 ${f.length}건(${ks.map(k=>k+' '+n[k]).join(', ')})을 먼저 빼세요.`}
-function stepOf(n){
- if(n===1){
-  if(sub1==='none')return{text:'검색 결과가 없습니다. 자기 말로 찾아보세요.',el:$('askBtn')};
+// ───── 다음에 누를 곳 한 줄 ─────
+function stepOf(){
+ if(act===1){
   if(!$('screen').hidden)return{text:'구매 화면은 예시입니다. 돌아가세요.',el:$('screenBack')};
   if(lastKorean())return{text:'고객 화면이라 영어나 중국어로 찾아 보세요.',g:'chip0'};
-  if(lastMiss())return{text:'판매 목록이 가상이라 실제 브랜드는 못 찾습니다. 아래 문장을 눌러 보세요.',g:'chip0'};
-  if(!cases.some(c=>c.sp))return{text:'이름 없이 설명한 문장을 눌러 보세요.',g:'chip0'};
-  if(!openedBuy&&document.querySelector('[data-g="buy"]'))return{text:'구매를 눌러 보세요.',g:'buy'};
-  if(!cases.some(c=>c.sb==='gap'))return{text:'이번에는 판매하지 않는 상품입니다.',g:'chip1'};
-  if(!cases.some(c=>c.lang==='zh-CN'))return{text:'이번에는 중국어 오타입니다.',g:'chip2'};
-  return{text:'담당자는 나간 판단을 뒤에 검토합니다.',done:true}}
- if(n===2){
+  if(ph==='home')return{text:'설명하는 말로 찾아 보세요.',g:'chip0'};
+  if(ph==='found')return{text:'이름은 기존 검색이 찾습니다. 설명으로 찾아 보세요.',g:'chip0'};
+  if(ph==='none')return{text:'검색 결과가 없습니다. 자기 말로 다시 찾으세요.',el:$('askBtn')};
+  if(cur&&!cur.out)return{text:'맞으면 구매, 아니면 거절을 누르세요.',g:'buy'};
+  if(isMiss(cur))return{text:'판매 목록이 가상이라 실제 브랜드는 못 찾습니다. 예시를 눌러 보세요.',g:'chip0'};
+  if(cur&&cur.sent)return{text:'보낸 요청입니다. 다른 말로도 찾아 보세요.',g:'chip0'};
+  return{text:'아래 버튼을 누르세요.',el:$('handBtn')}}
+ const a=arrived();
+ if(!a)return{text:'고객 화면에서 요청을 보내 보세요.'};
+ if(cs==='fix'){
+  const ak=keyOf(a);
+  if(a.ai&&!BY_ID[a.ai].m.correct&&!fixes[ak])return fixOpen[ak]?{text:'맞는 값을 고르세요.',el:document.querySelector(`#exp-${ak} .fixbar`)}:{text:'방금 들어온 판단을 확인해 고치세요.',g:'open-'+ak};
   if(!fixes.N65)return fixOpen.N65?{text:'주문 문의입니다. 다른 문의로 고치세요.',g:'fix-N65-other'}:{text:'이 주문 문의를 고치세요.',g:'open-N65'};
-  if(!fixes.N36)return fixOpen.N36?{text:'판매 목록에 없습니다. 판매 안 함으로 고치세요.',g:'fix-N36-gap'}:{text:'파란 병에 초록 병 상품을 붙였습니다. 고치세요.',g:'open-N36'};
-  return{text:'고친 값은 요청서 근거에 바로 들어갑니다.',done:true}}
- const c=clOf(curCl),rest=!isReg('syn')?'syn':!isReg('kelp')?'kelp':null;
- const NEXT={syn:{text:'이번에는 판매 중인 상품입니다.',go:'syn',btn:'다음: 초록 병 세럼 열기'},kelp:{text:'이번에는 판매하지 않는 상품입니다.',go:'kelp',btn:'다음: Aurora Kelp 열기'}};
- if(!c){if(!rest)return{text:'보냈습니다.',done:true};return{text:rest==='syn'?'묶음을 여세요.':NEXT.kelp.text,g:'row-'+rest}}
- if(isReg(c.id))return rest?NEXT[rest]:{text:'보냈습니다.',done:true};
+  return{text:'고친 값은 요청서 근거에 들어갑니다.',g:'toList'}}
+ if(cs==='list'){const t=targetOf(a);
+  if(t&&t.add&&!added['l'+a.id]){openD.add('loose');return{text:'이 요청을 초록 병 세럼 묶음에 넣으세요.',g:'add-'+a.id}}
+  if(t)return{text:'방금 들어온 요청이 든 묶음을 여세요.',g:'row-'+t.id};
+  return{text:'묶을 곳이 없는 요청입니다. 예시 묶음을 여세요.',g:'row-syn'}}
+ const c=clOf(curCl);if(!c)return{text:''};
+ if(isReg(c.id))return{text:'또 해 보세요.',g:'again'};
  const v=stateOf(c.id),cnt=itemsOf(c.id).length;
  if(!cnt)return{text:'남은 근거가 없습니다. 근거를 되돌리세요.'};
  if(flagsLeft(c.id).length)return{text:flagHint(c),g:'dropwrong'};
@@ -431,35 +452,29 @@ function stepOf(n){
  if(v.ask)return{text:'기준과 다릅니다. 한 번 더 확인합니다.',g:'offNo'};
  return{text:c.reg==='PI'?'판매 중인 상품이라 PI로 보냅니다.':'판매하지 않는 상품이라 MD로 보냅니다.',g:'reg-'+c.reg}}
 function guide(){
- if(scene===0)return;
- for(const n of[1,2,3]){const a=$('st'+n);a.classList.toggle('active',n===scene);if(n===scene)a.setAttribute('aria-current','step');else a.removeAttribute('aria-current')}
- const s=stepOf(scene),hb=$('hintBtn');
- stepNow=s;hb.className='btn'+((s.done&&scene<3)||s.go?' next':'');
- // 화면 3에서는 끝났을 때만 처음부터를 보이고, 한 번 더 눌러야 지운다
- const reset=scene===3&&!s.go&&s.done;hb.hidden=scene===3&&!s.go&&!s.done;
- $('hintText').textContent=reset&&resetArm?'한 번 더 누르면 고친 값이 모두 지워집니다.':s.text;
- hb.textContent=s.btn||(reset?(resetArm?'지우고 처음부터':'처음부터'):s.done?(scene===1?'다음: 담당자가 고치기':'다음: 요청서 만들기'):'건너뛰기');
- document.querySelectorAll('.next').forEach(e=>{if(e!==hb)e.classList.remove('next')});
+ const s=stepOf();$('role').textContent=act===1?'고객':'담당자';$('hintText').textContent=s.text;
+ document.querySelectorAll('.next').forEach(e=>e.classList.remove('next'));
  const el=s.el||(s.g?document.querySelector(`[data-g="${s.g}"]`):null);
- if(el)el.classList.add('next');
- const key=scene+':'+(s.g||s.text);
+ if(el&&el.checkVisibility&&el.checkVisibility())el.classList.add('next');
+ const key=act+cs+':'+(s.g||s.text);
  if(el&&key!==lastTarget){lastTarget=key;el.scrollIntoView({block:'nearest',inline:'nearest'})}}
-let stepNow=null,resetArm=false;
-$('hintBtn').onclick=()=>{if(stepNow&&stepNow.go){location.hash='#3/'+stepNow.go;return}if(scene===3){if(!resetArm){resetArm=true;guide();return}location.hash='';location.reload()}else location.hash='#'+(scene+1)};
 function sizes(){const s=document.documentElement.style;s.setProperty('--hh',$('top').offsetHeight+'px');s.setProperty('--fh',$('foot').offsetHeight+'px')}
 function draw(){
- resetArm=false;
  const g=document.activeElement&&document.activeElement.dataset?document.activeElement.dataset.g:null;
- $('intro').hidden=scene!==0;$('nav').hidden=scene===0;$('s1').hidden=scene!==1;$('s2').hidden=scene!==2;$('s3').hidden=scene!==3;
- const none=scene===1&&sub1==='none';$('noRes').hidden=!none;$('search').hidden=none;$('pbody').hidden=none;
- $('st1').setAttribute('href',opened?'#1/ask':'#1');
- if(scene===1&&!none)drawTries();if(scene===2)drawFix();if(scene===3)drawThree();
+ $('stage').className='act'+act;$('lead').style.visibility=act===1&&ph==='home'?'visible':'hidden';$('phone').lang=act===2?'ko':'en';
+ $('pbody').innerHTML=phoneBody();
+ $('handBtn').hidden=!(act===1&&cur&&!cur.plain&&cur.out);
+ $('handBtn').textContent=cur&&cur.sent?'담당자 화면으로':'이 요청은 담당자에게 갑니다';
+ if(act===2){if(cs==='fix')drawFix();else if(cs==='list')drawList();else{const c=clOf(curCl);if(c)drawSheet(c)}}
  guide();sizes();
  if(g){const e=document.querySelector(`[data-g="${g}"]`);if(e&&e!==document.activeElement)e.focus({preventScroll:true})}}
-function routeHash(){const m=/^#([1-3])(?:\/(ask|syn|kelp|balm))?$/.exec(location.hash);scene=m?+m[1]:0;curCl=m&&m[1]==='3'&&m[2]!=='ask'?m[2]||null:null;sub1=m&&m[1]==='1'&&m[2]==='ask'?'ask':'none';if(sub1==='ask'&&!opened){opened=true;$('q').value=$('noQ').textContent}lastTarget=null;scrollTo(0,0);draw()}
-
+function routeHash(){const m=/^#2(?:\/(list|syn|kelp|balm))?$/.exec(location.hash);const before=act;
+ if(m&&act===1)motionFrom=$('phone').getBoundingClientRect();
+ act=m?2:1;cs=!m?'fix':!m[1]?'fix':m[1]==='list'?'list':'sheet';curCl=m&&m[1]&&m[1]!=='list'?m[1]:null;
+ if(act===2&&cs==='list'){const t=targetOf(arrived());if(t&&t.add&&!added['l'+arrived().id])openD.add('loose')}
+ lastTarget=null;scrollTo(0,0);draw();if(before===1&&act===2)animateAct();else motionFrom=null}
 // 칸을 접으면 화면이 줄어드니 다음 버튼이 머리 아래로 숨지 않게 다시 맞춘다
-document.addEventListener('toggle',e=>{const k=e.target.dataset&&e.target.dataset.k;if(!k)return;if(e.target.open){openD.add(k);if(k===curCl+'-quote'&&!stateOf(curCl).seen){stateOf(curCl).seen=true;draw()}}else{openD.delete(k);const n=document.querySelector('main .next');if(n)n.scrollIntoView({block:'nearest',inline:'nearest'})}},true);
+document.addEventListener('toggle',e=>{const k=e.target.dataset&&e.target.dataset.k;if(!k)return;if(e.target.open){openD.add(k);if(curCl&&k===curCl+'-quote'&&!stateOf(curCl).seen){stateOf(curCl).seen=true;draw()}}else{openD.delete(k);const n=document.querySelector('main .next');if(n)n.scrollIntoView({block:'nearest',inline:'nearest'})}},true);
 $('q').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing)send()});
 let qHadFocus=false;$('q').addEventListener('mousedown',()=>{qHadFocus=document.activeElement===$('q')});$('q').addEventListener('click',()=>{if(!qHadFocus)$('q').select()});
 addEventListener('resize',sizes);
