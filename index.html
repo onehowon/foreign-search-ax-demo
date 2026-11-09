@@ -191,9 +191,9 @@ button{cursor:pointer}
 .menu button[aria-checked=true]{background:var(--pink);font-weight:700}
 .menu button .role{margin-left:auto;font-weight:400}
 .cbody{display:grid;grid-template-columns:160px minmax(0,1fr);min-height:0}
-.side{border-right:1px solid var(--line);padding:12px 8px;overflow-y:auto}
+.side{border-right:1px solid var(--line);padding:12px 8px;overflow-y:auto;background:#EDF0F4}
 .side a{display:flex;align-items:center;gap:9px;height:38px;padding:0 10px;border-radius:6px;color:var(--dk);text-decoration:none;font-size:13px;white-space:nowrap}
-.side a:hover{background:var(--soft)}
+.side a:hover{background:var(--line)}
 .side a[aria-current=page]{background:var(--pink);color:var(--ink);font-weight:700}
 .side a[aria-current=page] .ico{color:var(--btn)}
 .side .cnt{margin-left:auto;font-size:11px;color:var(--mut);font-weight:500}
@@ -252,6 +252,20 @@ td.cb input,th.cb input{width:15px;height:15px;margin:2px 0 0;accent-color:var(-
 .blk-r{display:block;color:var(--red);font-size:12px;margin-top:1px}
 .st-new{color:var(--ink)}
 .st-mute{color:var(--mut)}
+/* 상태 배지: 옅은 배경 + 진한 글자. 빨강·주황은 경고 배지 전용이라 쓰지 않는다 */
+.sb{display:inline-block;font-size:12px;line-height:18px;padding:0 7px;border-radius:9px;font-weight:600;white-space:nowrap}
+.sb-new{background:#E9ECF0;color:#2F3640}
+.sb-ok{background:#E6EEFB;color:#1F4C94}
+.sb-req{background:#EFE9F9;color:#55358F}
+.sb-done{background:#E3F2E8;color:#1C6535}
+.sb-off{background:#F3F4F6;color:#5C6677;font-weight:500}
+/* 검색 실패 접수 KPI */
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:12px}
+.kpi{display:block;min-width:0;background:#fff;border:1px solid var(--line);border-radius:6px;padding:10px 14px;text-align:left}
+.kpi b{display:block;font-size:26px;font-weight:700;line-height:1.2;color:var(--ink)}
+.kpi span{display:block;font-size:13px;color:var(--dk);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+button.kpi:hover{border-color:var(--lt)}
+button.kpi[aria-pressed=true]{border-color:var(--ink)}
 .lnk{border:0;background:none;padding:0;color:var(--dk);font-size:12px;text-decoration:underline;text-underline-offset:2px;text-decoration-color:var(--lt);white-space:nowrap}
 .lnk:hover{color:var(--ink);text-decoration-color:var(--ink)}
 .lnk:disabled{color:#8B93A1;text-decoration:none;cursor:default}
@@ -372,6 +386,7 @@ td.act .lnk+.lnk{margin-left:10px}
  .side{display:flex;gap:4px;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:6px 8px;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 88%,transparent);mask-image:linear-gradient(90deg,#000 88%,transparent)}
  .side a{flex:none;height:32px;padding:0 10px}
  .main{padding:14px 12px 24px}
+ .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
  .drawer{width:100%;top:0}
  .scrim{inset:0}
  .tsearch{flex-basis:100%}
@@ -1034,6 +1049,9 @@ function renderFlow(){const f=document.getElementById('flow');if(f)f.innerHTML=S
 /* ---------- 콘솔 ---------- */
 const STL={new:'검토 전',ok:'확인됨',req:'요청서에 묶임',excl:'제외'};
 const RST={draft:'작성 중',reg:'등록됨',applied:'반영됨',sent:'MD에게 전달됨',done:'확인 완료',rejected:'반려'};
+/* 상태 배지 색: 글자는 STL·RST 그대로, 색만 더한다 */
+const rowSb=r=>r.st==='new'?'sb-new':r.st==='ok'?'sb-ok':r.st==='excl'?'sb-off':(q=>q&&(q.st==='applied'||q.st==='done')?'sb-done':'sb-req')(reqOf(r));
+const REQ_SB={draft:'sb-new',reg:'sb-ok',sent:'sb-req',applied:'sb-done',done:'sb-done',rejected:'sb-off'};
 const autoTxt=a=>PM[a.r]?pkr(PM[a.r]):a.r==='gap'?'판매 안 함'+(a.want?` · ${a.want}`:''):a.r==='other'?'검색 아님':'판단 없음';
 const staffTxt=s=>!s?'':s.k==='ok'?'맞음':s.k==='prod'?`다른 상품 · ${pkr(PM[s.pid])}`:s.k==='gap'?`판매 안 함 · ${s.want}`:`제외 · ${s.reason}`;
 const rowPid=r=>r.staff?(r.staff.k==='ok'?r.auto.r:r.staff.k==='prod'?r.staff.pid:null):null;
@@ -1079,6 +1097,17 @@ function inboxRows(){
  const u=S.ui;const q=u.q.trim().toLowerCase();
  return S.log.filter(r=>(u.tab==='all'||r.st===u.tab)&&(!u.ch||r.ch===u.ch)&&(!u.au||(u.au==='AI'||u.au==='규칙'?r.auto.by===u.au:u.au==='prod'?!!PM[r.auto.r]:r.auto.r===u.au))&&(!q||r.q.toLowerCase().includes(q)||autoTxt(r.auto).toLowerCase().includes(q)||String(r.id)===q.replace('#','')||(r.req||'').toLowerCase()===q||r.kw.some(k=>k.includes(q))));
 }
+/* KPI 「오늘」 기준일: 예시 접수의 마지막 줄(11-08)이 놓인 날. 시스템 날짜가 바뀌어도 저장된 예시 시각을 따라간다 */
+function kpiDay0(){const L=SEEDLOG[SEEDLOG.length-1];const row=S.log.find(r=>r.id===SEEDLOG.length);return row?row.t-(D(L[0],L[1])-D('11-08','00:00')):D('11-08','00:00')}
+function inboxKpiH(){
+ const d0=kpiDay0();
+ const newN=S.log.filter(r=>r.st==='new').length;
+ const today=S.log.filter(r=>r.t>=d0&&r.t<d0+864e5).length;
+ const open=S.reqs.filter(r=>r.st==='draft'||r.st==='reg').length;
+ /* 반영 뒤 재발: 사전 검색어(dictMatch)에 걸리는데 그 검색어가 들어간 뒤 실패로 접수된 줄 */
+ const recur=S.log.filter(x=>S.dict.some(d=>x.t>d.t&&dictMatch(d,x.qn))).length;
+ return `<div class="kpis"><button type="button" class="kpi" data-act="itab" data-k="new" aria-pressed="${S.ui.tab==='new'}"><b>${newN}</b><span>검토 전</span></button><div class="kpi"><b>${today}</b><span>오늘 접수</span></div><div class="kpi"><b>${open}</b><span>요청서 진행 중</span></div><div class="kpi"><b>${recur}</b><span>반영 뒤 재발</span></div></div>`;
+}
 function inboxH(){
  const u=S.ui;const rows=inboxRows();const ops=isOps();
  const cnt=k=>k==='all'?S.log.length:S.log.filter(r=>r.st===k).length;
@@ -1088,6 +1117,7 @@ function inboxH(){
  const allOn=rows.length&&rows.every(r=>sel.includes(r.id));
  const nowT=now();const opsT=ops?'':'title="운영 담당 작업"';
  return `<div class="ph1"><div><h1>검색 실패 접수</h1><div class="ver">사전 버전 <b>${dverStr()}</b></div></div></div>
+ ${inboxKpiH()}
  <div class="tabs" role="tablist">${tabs.map(k=>`<button role="tab" type="button" data-act="itab" data-k="${k}" aria-selected="${u.tab===k}">${k==='all'?'전체':STL[k]}<span>${cnt(k)}</span></button>`).join('')}</div>
  <div class="panelbox"><div class="tb">
   <button class="b" type="button" data-act="bconfirm" aria-label="선택 확인" ${sel.length&&ops?'':'disabled'} title="${ops?'체크한 검토 전 줄을 자동 판단대로 맞음 처리. 고객 아님·색·용기 다름·같은 종류 판매 중·입점 수요·명령 문장·검색 아님 줄은 빠짐':'운영 담당 작업'}">선택 확인</button>
@@ -1113,7 +1143,7 @@ function inboxH(){
   <td><span class="qt" ${r.lang==='zh'?'lang="zh-CN"':''}>${esc(r.q)}</span>${r.kw.length?`<span class="sub">${r.kw.map(esc).join(' · ')}</span>`:''}</td>
   <td><span class="tag ${r.auto.by==='AI'?'ai':''}">${r.auto.by}</span>${esc(autoTxt(r.auto))}${r.react==='no'?'<span class="sub"><span class="tag warn">고객 아님</span></span>':r.react==='bag'?'<span class="sub">고객: 담음</span>':''}${!PM[r.auto.r]&&sameType(r).length?`<span class="sub"><span class="tag warn">같은 종류 판매 중</span>${esc(pkr(PM[sameType(r)[0]]))}</span>`:''}</td>
   <td>${r.staff?esc(staffTxt(r.staff)):'<span class="st-mute">—</span>'}${r.staff?`<span class="sub">${esc(r.staff.by)}</span>`:''}${r.keepWant?`<span class="sub"><span class="tag keep">입점 수요</span>${esc(r.keepWant)}</span>`:''}</td>
-  <td class="nw"><span class="${r.st==='new'?'st-new':'st-mute'}">${STL[r.st]}</span>${r.req?`<span class="sub">${r.req}${reqOf(r)?' · '+RST[reqOf(r).st]:''}</span>`:''}${r.mdReq&&r.mdReq!==r.req?`<span class="sub">${r.mdReq} · 입점 수요</span>`:''}${rowConflict(r)&&r.st==='new'?'<span class="blk-r">색·용기 다름</span>':''}${r.cmd&&r.st!=='excl'?'<span class="blk-r">확인 필요 1 · 명령 문장</span>':''}${b?`<span class="blk-r">${esc(b)}</span>`:''}</td>
+  <td class="nw"><span class="sb ${rowSb(r)}">${STL[r.st]}</span>${r.req?`<span class="sub">${r.req}${reqOf(r)?' · '+RST[reqOf(r).st]:''}</span>`:''}${r.mdReq&&r.mdReq!==r.req?`<span class="sub">${r.mdReq} · 입점 수요</span>`:''}${rowConflict(r)&&r.st==='new'?'<span class="blk-r">색·용기 다름</span>':''}${r.cmd&&r.st!=='excl'?'<span class="blk-r">확인 필요 1 · 명령 문장</span>':''}${b?`<span class="blk-r">${esc(b)}</span>`:''}</td>
   <td class="act"><button class="lnk" type="button" data-act="open" data-id="${r.id}" aria-label="#${r.id} ${ops?'판단':'보기'}">${ops?'판단':'보기'}</button></td></tr>`}).join('')||`<tr><td colspan="7" class="nodata">조건에 맞는 줄이 없습니다</td></tr>`}</tbody></table></div>
  <div class="foot">${rows.length} / ${S.log.length} 표시</div></div>`;
 }
@@ -1201,7 +1231,7 @@ function reqListH(){
  <div class="tabs" role="tablist">${[['all','전체'],['draft','작성 중'],['reg','등록됨'],['applied','반영됨'],['sent','MD 전달'],['rejected','반려']].map(([k,t])=>`<button role="tab" type="button" data-act="rtab" data-k="${k}" aria-selected="${u.rTab===k}">${t}<span>${cnt(k)}</span></button>`).join('')}</div>
  <div class="panelbox"><div class="tb">${isOps()?`<a class="b pri" href="#/inbox" data-act="rnew" style="text-decoration:none">${I('plus','s')}새 요청서</a><span class="hint">검색 실패 접수에서 줄을 골라 묶음</span>`:`<span class="hint">등록된 요청서를 열어 검색어 반영 · 반려 · MD 전달</span>`}<span class="count" style="margin-left:auto"><b>${rows.length}</b>건</span></div>
  <div class="tw"><table><thead><tr><th>번호</th><th>유형</th><th>결론</th><th style="text-align:right">근거</th><th>우선순위</th><th>상태</th><th>등록</th><th>처리</th><th></th></tr></thead><tbody>
- ${rows.map(r=>`<tr class="rw" data-act="ropen" data-id="${r.id}" tabindex="0"><td class="nw"><b style="font-weight:600">${r.id}</b></td><td>${r.type}</td><td><span class="qt">${esc(r.title||'(결론 없음)')}</span></td><td style="text-align:right">${r.ev.filter(e=>!e.off).length}건</td><td>${r.pri||'—'}</td><td class="nw">${RST[r.st]}</td><td class="nw">${r.regT?fmt(r.regT):'—'}</td><td class="nw">${r.appT?fmt(r.appT):r.sentT?fmt(r.sentT):r.rejT?fmt(r.rejT):'—'}</td><td class="act"><button class="lnk" type="button" data-act="ropen" data-id="${r.id}">열기</button></td></tr>`).join('')||`<tr><td colspan="9" class="nodata">요청서가 없습니다</td></tr>`}
+ ${rows.map(r=>`<tr class="rw" data-act="ropen" data-id="${r.id}" tabindex="0"><td class="nw"><b style="font-weight:600">${r.id}</b></td><td>${r.type}</td><td><span class="qt">${esc(r.title||'(결론 없음)')}</span></td><td style="text-align:right">${r.ev.filter(e=>!e.off).length}건</td><td>${r.pri||'—'}</td><td class="nw"><span class="sb ${REQ_SB[r.st]||'sb-new'}">${RST[r.st]}</span></td><td class="nw">${r.regT?fmt(r.regT):'—'}</td><td class="nw">${r.appT?fmt(r.appT):r.sentT?fmt(r.sentT):r.rejT?fmt(r.rejT):'—'}</td><td class="act"><button class="lnk" type="button" data-act="ropen" data-id="${r.id}">열기</button></td></tr>`).join('')||`<tr><td colspan="9" class="nodata">요청서가 없습니다</td></tr>`}
  </tbody></table></div></div>`;
 }
 function reqIssues(r){
