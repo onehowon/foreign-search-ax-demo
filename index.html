@@ -397,6 +397,82 @@ td.act .lnk+.lnk{margin-left:10px}
 @keyframes freshs{0%,40%{background:var(--pink)}100%{background:#fff}}
 
 </style>
+<style id="guide-css">
+/* 가이드 모드: 기존 화면 위에 덧씌우는 층. 기존 규칙과 토큰은 건드리지 않고 g- 접두어만 쓴다 */
+:root{--g-dim:rgba(27,30,35,.55);--g-ai:#2F4A8A;--g-ai-bg:#EEF3FF;--g-hl:#FFF1C2;--g-hl-line:#D9A400}
+.g-mode{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;position:relative;z-index:61;background:#fff;flex:none}
+.g-mode button{height:26px;border:0;background:#fff;padding:0 9px;font-size:12px;color:var(--dk);white-space:nowrap}
+.g-mode button+button{border-left:1px solid var(--line)}
+.g-mode button[aria-pressed=true]{background:var(--ink);color:#fff;font-weight:600}
+.g-bar{order:9;flex-basis:100%;display:flex;align-items:center;gap:6px 10px;flex-wrap:wrap;margin-top:4px;padding:6px 0 2px;border-top:1px solid var(--line2);position:relative;z-index:61;background:#fff;font-size:12px;color:var(--dk)}
+.g-bar .g-sn{font-weight:700;color:var(--ink)}
+.g-dots{display:flex;gap:4px;align-items:center;margin:0;padding:0;list-style:none}
+.g-dots li{width:9px;height:9px;border-radius:5px;background:var(--line);cursor:default}
+.g-dots li.done{background:var(--dk)}
+.g-dots li.on{background:var(--btn);box-shadow:0 0 0 2px var(--pink)}
+.g-pos{font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+.g-bar .g-sp{flex:1}
+.g-bar button{height:26px;padding:0 9px;border:1px solid var(--line);border-radius:5px;background:#fff;font-size:12px;color:var(--dk);white-space:nowrap}
+.g-bar button:hover{background:var(--soft)}
+.g-hole{position:fixed;z-index:60;pointer-events:none;border-radius:8px;box-shadow:0 0 0 2px var(--btn),0 0 0 100vmax var(--g-dim)}
+.g-hole.ai{box-shadow:0 0 0 2px var(--g-ai),0 0 0 100vmax var(--g-dim)}
+.g-hole:after{content:"";position:absolute;inset:-2px;border-radius:inherit;animation:g-pulse 1.6s ease-out infinite}
+.g-hole.ai:after{animation-name:g-pulse-ai}
+@keyframes g-pulse{0%{box-shadow:0 0 0 0 rgba(217,33,33,.5)}70%,100%{box-shadow:0 0 0 9px rgba(217,33,33,0)}}
+@keyframes g-pulse-ai{0%{box-shadow:0 0 0 0 rgba(47,74,138,.5)}70%,100%{box-shadow:0 0 0 9px rgba(47,74,138,0)}}
+.g-bub{position:fixed;z-index:62;width:330px;max-width:calc(100vw - 24px);background:#fff;color:var(--ink);border:2px solid var(--ink);border-radius:10px;padding:12px 14px;box-shadow:0 12px 32px rgba(0,0,0,.28);font-size:14px;line-height:1.55}
+.g-bub.ai{border-color:var(--g-ai)}
+.g-bh{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.g-chip{font-size:11px;font-weight:700;line-height:18px;padding:0 7px;border-radius:9px;background:var(--pink);color:var(--btn-dk);white-space:nowrap}
+.g-chip.r-ops{background:#E6EEFB;color:#1F4C94}
+.g-chip.r-pi{background:#EFE9F9;color:#55358F}
+.g-chip.k-ai{background:var(--g-ai-bg);color:var(--g-ai)}
+.g-bh .g-n{margin-left:auto;font-size:11px;color:var(--mut);font-variant-numeric:tabular-nums}
+.g-bub p{margin:0;font-weight:600}
+.g-aux{margin-top:8px;font-size:12px;color:var(--mut);display:flex;align-items:center;gap:8px;min-height:20px}
+.g-next{margin-left:auto;height:32px;padding:0 14px;border:0;border-radius:6px;background:var(--ink);color:#fff;font-size:13px;font-weight:600;flex:none}
+.g-bub.ai .g-next{background:var(--g-ai)}
+.g-bub.sheet{left:0!important;right:0;top:auto!important;bottom:0;width:auto;max-width:none;border-radius:14px 14px 0 0;border-width:2px 0 0;padding:12px 16px calc(14px + env(safe-area-inset-bottom))}
+.g-bub.sheet.top{top:0!important;bottom:auto;border-radius:0 0 14px 14px;border-width:0 0 2px;padding:12px 16px}
+.g-toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:75;width:max-content;max-width:min(560px,calc(100vw - 24px));background:var(--ink);color:#fff;border-radius:8px;padding:10px 14px;font-size:13px;line-height:1.5;box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:0;transition:opacity .18s;pointer-events:none}
+.g-toast.on{opacity:1}
+.g-banner{position:fixed;left:50%;top:12px;transform:translate(-50%,-6px);z-index:75;background:#fff;border:2px solid var(--ink);border-radius:999px;padding:6px 16px;font-size:14px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.2);opacity:0;transition:.2s;pointer-events:none;white-space:nowrap}
+.g-banner.on{opacity:1;transform:translate(-50%,0)}
+.g-modal{position:fixed;inset:0;z-index:70;background:var(--g-dim);display:flex;align-items:center;justify-content:center;padding:16px;overflow:auto}
+.g-modal.light{background:rgba(27,30,35,.28)}
+.g-card{background:#fff;border-radius:12px;width:100%;max-width:780px;padding:20px;box-shadow:0 16px 48px rgba(0,0,0,.3);margin:auto}
+.g-ch{display:flex;align-items:flex-start;gap:12px}
+.g-ch h2{font-size:18px;font-weight:700;line-height:1.4}
+.g-x{margin-left:auto;width:32px;height:32px;border:0;border-radius:8px;background:none;font-size:20px;line-height:1;color:var(--mut);flex:none}
+.g-x:hover{background:var(--soft)}
+.g-sub{margin:4px 0 14px;font-size:13px;color:var(--mut)}
+.g-scs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.g-sc{text-align:left;border:1px solid var(--line);border-radius:10px;background:#fff;padding:14px;display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--dk)}
+.g-sc:hover{border-color:var(--lt);background:#FCFCFD}
+.g-sc b{font-size:15px;color:var(--ink);line-height:1.4}
+.g-sc.main{border:2px solid var(--btn);padding:13px}
+.g-sc .g-tag{align-self:flex-start;font-size:11px;font-weight:700;line-height:18px;padding:0 7px;border-radius:9px;background:var(--pink);color:var(--btn-dk)}
+.g-sc .g-tag.plain{background:var(--line2);color:var(--dk)}
+.g-sc .g-meta{margin-top:auto;padding-top:4px;font-size:12px;color:var(--mut);font-variant-numeric:tabular-nums}
+.g-foot{display:flex;align-items:center;gap:8px;margin-top:16px;flex-wrap:wrap}
+.g-foot .g-note{font-size:12px;color:var(--mut);margin-right:auto}
+.g-btn{height:36px;padding:0 14px;border:1px solid var(--line);border-radius:6px;background:#fff;font-size:13px;font-weight:600;color:var(--ink)}
+.g-btn.pri{background:var(--btn);border-color:var(--btn);color:#fff}
+.g-endt{font-size:17px;font-weight:700;line-height:1.5;margin:10px 0 0}
+.g-end{max-width:520px}
+.kpi.g-flash{animation:g-flash .8s ease-out;box-shadow:0 0 0 2px var(--g-hl-line)}
+tr.rw.g-flash td{animation:g-flash .8s ease-out}
+@keyframes g-flash{0%,35%{background:var(--g-hl)}100%{background:transparent}}
+@media (max-width:760px){
+ .g-scs{grid-template-columns:1fr}
+ .g-card{padding:16px}
+ .g-bar{gap:6px 8px}
+ .g-bar .g-st,.g-dots,.g-bar .g-sp{display:none}
+ .g-bar .g-pos{margin-right:auto}
+ .g-bar button{padding:0 8px}
+}
+@media (prefers-reduced-motion:reduce){.g-hole:after{animation:none}.g-banner,.g-toast{transition:none}}
+</style>
 </head>
 <body>
 <header class="top">
@@ -419,6 +495,7 @@ td.act .lnk+.lnk{margin-left:10px}
  <section class="con" id="con" aria-label="검색 운영 콘솔"></section>
 </div>
 
+<script>/* 가이드 모드: 기존 스크립트가 주소 해시를 채우기 전에 처음 주소를 기억한다 */window.__hddfBoot={hash:location.hash,search:location.search};</script>
 <script>
 'use strict';
 /* ---------- 아이콘 (Tabler Icons MIT 선 모양) ---------- */
@@ -1744,6 +1821,460 @@ setView(S.ui.mv||'c',true);
 if(!location.hash)history.replaceState(null,'','#/'+(S.ui.page||'inbox')+(S.ui.page==='requests'&&S.ui.req?'/'+S.ui.req:''));
 route();
 if(isNarrow()&&S.ui.mv)setView(S.ui.mv,true);
+</script>
+<script id="guide">
+/* ---------- 가이드 모드 ----------
+   기존 화면 위에 스포트라이트와 말풍선만 덧씌운다. 상태를 바꾸는 일은 사용자가 실제 버튼을 눌러 기존 함수가 한다.
+   가이드가 직접 하는 일은 화면 전환(고객·관리자 탭, 콘솔 메뉴 주소)과 처음 상태로 되돌리기(초기화 버튼 두 번)뿐이다.
+   [건너뛰기]와 ← 키만 같은 실제 버튼을 대신 눌러 단계를 채운다.
+   주소 규칙: ?mode=free는 자유 체험, ?mode=guide는 가이드, 둘 다 없고 #/메뉴 주소가 있으면 자유 체험으로 그 화면,
+   둘 다 없으면 시나리오 선택 화면. 가이드 상태는 sessionStorage(hddf-guide-v1)에만 둔다 */
+(()=>{
+'use strict';
+const GKEY='hddf-guide-v1';
+const boot=window.__hddfBoot||{hash:'',search:''};
+const store={get(){try{return JSON.parse(sessionStorage.getItem(GKEY)||'null')}catch(e){return null}},set(v){try{sessionStorage.setItem(GKEY,JSON.stringify(v))}catch(e){}}};
+const q1=s=>document.querySelector(s);
+/* 화면에 실제로 보이는가: 닫힌 details 안의 내용은 Chrome에서도 상자가 남아 있어 따로 거른다 */
+const vis=el=>{if(!el||!el.isConnected||!el.getClientRects().length)return false;const d=el.closest('details:not([open])');if(d&&!el.closest('summary'))return false;const r=el.getBoundingClientRect();return r.width>0&&r.height>0};
+const rowOf=id=>S.log.find(r=>r.id===id);
+const reqBy=id=>S.reqs.find(r=>r.id===id);
+const rowByQ=q=>S.log.find(r=>r.q===q);
+const pn=pid=>PM[pid]?pkr(PM[pid]):'';
+const cb=id=>q1(`#con input[data-act=sel][data-id="${id}"]`);
+const judgeBtn=id=>q1(`#con button.lnk[data-act=open][data-id="${id}"]`);
+const act=(a,x='')=>q1(`#con [data-act=${a}]${x}`);
+const preset=i=>q1(`#scen [data-act=preset][data-i="${i}"]`);
+const PRE=i=>PRESETS[i][0];
+const evN=r=>r.ev.filter(e=>!e.off).length;
+const kpiNow=()=>{const d0=kpiDay0();return [S.log.filter(r=>r.st==='new').length,S.log.filter(r=>r.t>=d0&&r.t<d0+864e5).length,S.reqs.filter(r=>r.st==='draft'||r.st==='reg').length,S.log.filter(x=>S.dict.some(d=>x.t>d.t&&dictMatch(d,x.qn))).length]};
+/* 단계 안의 지금 누를 곳: target(data-guide 값), el(실제 요소), label(버튼 이름), before(말풍선 1문장) */
+const H=(target,el,label,before,o={})=>({target,el,label,before,...o});
+const searched=(i,c)=>{const r=S.c.res;if(S.c.scr==='results'&&S.c.q===PRE(i)&&r&&r.row){c.row=r.row;return true}return false};
+const checkSub=(c,ids,line)=>{const id=ids.find(x=>!S.ui.sel.includes(x));return id==null?null:H('row-check',()=>cb(id),`#${id} 체크`,()=>line(id,ids.indexOf(id)))};
+const regCur=(pri,fill,priLine)=>c=>{const r=reqBy(c.req);if(!r)return null;
+ if(r.pri!==pri)return H('priority',()=>act('rpri',`[data-p="${pri}"]`),pri,()=>priLine(r));
+ const ta=q1('#rwhy');
+ if(!r.why.trim()||(ta&&document.activeElement===ta))return H('reason',()=>q1('#rwhy'),'이유',()=>'PI 담당이 읽을 우선순위 이유를 이 칸에 한 줄로 적습니다.',{input:true,fill,extra:()=>r.why.trim()?[act('rreg')]:[]});
+ return H('register',()=>act('rreg'),'등록',()=>'결론과 근거와 우선순위가 채워졌으니 [등록]으로 PI 담당에게 넘깁니다.')};
+const reqPage=c=>'#/requests/'+c.req;
+
+/* ---------- 시나리오 데이터 ----------
+   단계 = { id, kind: human|ai|system, role, tab, target, name, before(cur 안), after, page, cur, done }
+   화면 값(접수 번호, 건수, 상품명, 요청서 번호)은 모두 상태 S에서 읽는다 */
+const SCEN={
+A:{title:'판매 중인 상품을 설명으로 찾음',time:'약 3분',desc:'이름 없이 설명한 문장이 운영 담당 확인과 PI 반영을 거쳐 다음 고객의 첫 검색 결과가 되기까지 따라갑니다.',
+ end:c=>'같은 말로 찾은 다음 고객은 첫 검색에서 상품을 받습니다.',
+ steps:[
+ {id:'a1',name:'설명 문장으로 검색',kind:'human',role:'고객',tab:'고객',target:'example-green',
+  cur:c=>H('example-green',()=>preset(0),PRE(0),()=>`친구가 산 상품을 이름 없이 설명한 「${PRE(0)}」 문장으로 검색합니다.`),
+  done:c=>searched(0,c),
+  after:c=>`「${PRE(0)}」 검색은 결과가 0건이라 검색 실패 접수 #${c.row}로 남았습니다.`},
+ {id:'a2',name:'AI 상품 제안',kind:'ai',role:'고객',tab:'고객',target:'ai-suggestion-card',
+  cur:c=>H('ai-suggestion-card',()=>q1('#screen .dym'),'',()=>`이름 없이 쓴 문장에서 AI가 판매 중인 ${pn(rowOf(c.row).auto.r)} 상품을 골라 Did you mean 카드로 제안합니다.`)},
+ {id:'a3',name:'제안 상품 담기',kind:'human',role:'고객',tab:'고객',target:'add-to-bag',
+  cur:c=>H('add-to-bag',()=>q1('#screen [data-act=addsug]'),'Add to bag',()=>'제안이 맞으면 고객이 [Add to bag]을 누르고 그 반응이 운영 화면의 근거로 남습니다.'),
+  done:c=>rowOf(c.row).react==='bag',
+  after:c=>`${pn(rowOf(c.row).auto.r)} 상품이 가방에 담기고 접수 #${c.row}에 고객 반응 「담음」이 기록됐습니다.`},
+ {id:'a4',name:'검색 실패 접수',kind:'system',role:'운영 담당',tab:'관리자',target:'inbox-new-row',page:()=>'#/inbox',
+  cur:c=>H('inbox-new-row',()=>q1(`#con tr.rw[data-id="${c.row}"]`),'',()=>`결과가 없던 검색이라 검색 실패 접수 맨 위에 #${c.row} 줄이 새로 들어왔습니다.`)},
+ {id:'a5',name:'자동 판단 확인',kind:'ai',role:'운영 담당',tab:'관리자',target:'auto-judgment-cell',page:()=>'#/inbox',
+  cur:c=>H('auto-judgment-cell',()=>q1(`#con tr.rw[data-id="${c.row}"] td:nth-child(4)`),'',()=>`AI가 고객 문장을 읽고 찾는 상품을 ${pn(rowOf(c.row).auto.r)} 상품으로 판단해 AI 배지와 함께 이 칸에 적었습니다.`)},
+ {id:'a6',name:'같은 상품 줄 선택 확인',kind:'human',role:'운영 담당',tab:'관리자',target:'bulk-confirm',page:()=>'#/inbox',
+  enter:c=>{if(!c.picks){const n=rowOf(c.row);c.picks=[n.id,...S.log.filter(r=>r.id!==n.id&&r.st==='new'&&r.auto.r===n.auto.r&&!bulkSkip(r)).map(r=>r.id)].slice(0,3)}},
+  cur:c=>checkSub(c,c.picks,(id,k)=>`같은 상품으로 판단된 ${c.picks.length}줄 가운데 ${k+1}번째인 #${id} 줄을 체크합니다.`)||H('bulk-confirm',()=>act('bconfirm'),'선택 확인',()=>`체크한 ${c.picks.length}줄을 자동 판단대로 맞음 처리하려고 [선택 확인]을 누릅니다.`),
+  done:c=>c.picks.every(id=>rowOf(id).st!=='new'),
+  after:c=>`${c.picks.length}줄이 확인됨으로 바뀌어 검토 전이 ${kpiNow()[0]}건이 됐습니다.`},
+ {id:'a7',name:'PI 요청서로 묶기',kind:'human',role:'운영 담당',tab:'관리자',target:'bundle-pi',page:()=>'#/inbox',
+  cur:c=>checkSub(c,c.picks,id=>`묶을 줄 #${id}를 다시 체크합니다.`)||H('bundle-pi',()=>act('bundle','[data-t=PI]'),'PI 요청서로 묶기',()=>`확인한 ${c.picks.length}줄을 한 장의 PI 요청서로 묶어 검색어 연결을 요청합니다.`),
+  done:c=>{const r=S.reqs.find(x=>x.type==='PI'&&x.ev.some(e=>e.lid===c.row));if(r)c.req=r.id;return !!r},
+  after:c=>{const r=reqBy(c.req);return `${r.id} 요청서가 작성 중으로 만들어졌고 연결할 검색어 ${r.terms.filter(t=>t.on).length}개가 들어갔습니다.`}},
+ {id:'a8',name:'반영 전 영향 미리 보기',kind:'ai',badge:'규칙 계산',role:'운영 담당',tab:'관리자',target:'impact-preview',page:reqPage,
+  cur:c=>H('impact-preview',()=>{const h=q1(`#con .csh[data-k="${c.req}imp"]`);return h?[h,h.nextElementSibling]:null},'',()=>{const r=reqBy(c.req);const e=evRows(r),im=impactRows(r),cx=counterEx(r);
+   return `반영하기 전에 근거 ${e.length}건 중 ${e.filter(x=>x.ok).length}건이 해결되고 고객 거절 접수 ${im.filter(x=>x.soft).length}건에 결과가 생기며 반례 경고는 ${cx.filter(x=>x.warn).length}건이라고 미리 계산했습니다.`})},
+ {id:'a9',name:'우선순위와 등록',kind:'human',role:'운영 담당',tab:'관리자',target:'register',page:reqPage,
+  cur:regCur('높음','같은 세럼을 설명으로 찾다 실패한 접수가 반복됨',r=>`근거 ${evN(r)}건이 같은 상품을 찾다 실패한 접수라 우선순위를 [높음]으로 고릅니다.`),
+  done:c=>reqBy(c.req).st==='reg',
+  after:c=>{const r=reqBy(c.req);return `${r.id} 요청서가 우선순위 ${r.pri}으로 등록되어 PI 담당이 처리할 차례가 됐습니다.`}},
+ {id:'a10',name:'고객 거절 접수 확인',kind:'human',role:'PI 담당',tab:'관리자',target:'reject-ack',page:reqPage,
+  cur:c=>{if(S.role!=='pi')return H('go-pi',()=>act('gopi'),'PI 담당으로 전환해 반영',()=>'반영은 PI 담당 일이라 [PI 담당으로 전환해 반영]으로 역할을 바꿉니다.');
+   const ackEl=()=>{const r=reqBy(c.req);return [...document.querySelectorAll('#con [data-act=ack]')].find(x=>!((r.ack||{})[x.dataset.id]))||null};
+   if(vis(ackEl()))return H('reject-ack',ackEl,'확인함',()=>'고객이 아님을 누른 접수에도 결과가 생기니 내용을 보고 [확인함]에 체크합니다.');
+   return H('reject-ack-open',()=>act('goack'),'고객 거절 접수 항목',()=>'반영 전 확인 목록의 고객 거절 접수 항목을 눌러 해당 줄로 이동합니다.')},
+  done:c=>S.role==='pi'&&!applyIssues(reqBy(c.req)).some(x=>/확인 체크 필요/.test(x)),
+  after:c=>{const r=reqBy(c.req);return `고객 거절 접수 ${Object.values(r.ack||{}).filter(Boolean).length}건을 확인해 반영 전 확인 항목이 ${applyIssues(r).length}건이 됐습니다.`}},
+ {id:'a11',name:'검색어 반영',kind:'human',role:'PI 담당',tab:'관리자',target:'apply',page:reqPage,
+  cur:c=>H('apply',()=>act('rapply'),'검색어 반영',()=>`반영 전 확인 항목이 ${applyIssues(reqBy(c.req)).length}건이 되어 [검색어 반영]으로 검색어를 사전에 넣습니다.`),
+  done:c=>reqBy(c.req).st==='applied',
+  after:c=>`검색어 ${S.dict.filter(d=>d.src===c.req).length}개가 사전에 들어가 사전 버전이 v${S.dver}로 올라갔습니다.`},
+ {id:'a12',name:'새 고객 재검색',kind:'human',role:'고객',tab:'관리자',target:'re-search',page:reqPage,
+  cur:c=>H('re-search',()=>act('gocust'),'새 고객으로 다시 검색',()=>'반영이 통하는지 새 고객이 같은 문장으로 다시 검색하도록 [새 고객으로 다시 검색]을 누릅니다.'),
+  done:c=>!!(S.expect&&S.expect.done&&S.expect.req===c.req&&S.c.scr==='results'),
+  after:c=>{const r=S.c.res||{};const ps=r.pids||[];return ps.length?`새 고객의 첫 검색이 결과 ${ps.length}건으로 ${pn(ps[0])} 상품을 바로 보여 줍니다.`:'새 고객의 첫 검색도 결과를 받지 못했습니다.'}},
+ ]},
+B:{title:'판매하지 않는 상품은 MD로',time:'약 2분',desc:'판매하지 않는 상품을 찾은 기록을 같은 종류 판매 상품 제안과 MD 판매 검토 요청으로 나눠 넘깁니다.',
+ end:c=>{const r=reqBy(c.req);return `판매 여부는 MD가 정하고, 요청 ${r?evN(r):0}건이 검토 근거로 남습니다.`},
+ steps:[
+ {id:'b1',name:'상품명으로 검색',kind:'human',role:'고객',tab:'고객',target:'example-kelp',
+  cur:c=>H('example-kelp',()=>preset(1),PRE(1),()=>`이번 고객은 이 시제품이 팔지 않는 「${PRE(1)}」를 상품명으로 찾습니다.`),
+  done:c=>searched(1,c),
+  after:c=>`결과가 없어 검색 실패 접수 #${c.row}로 남았고 고객 화면에는 ${(S.c.res.related||[]).length?'Similar items가':'다른 검색 안내가'} 나왔습니다.`},
+ {id:'b2',name:'같은 종류 상품 제안',kind:'ai',role:'고객',tab:'고객',target:'similar-items',
+  cur:c=>H('similar-items',()=>{const h=q1('#screen .simh');return h?[h,h.nextElementSibling]:null},'',()=>{const rel=(S.c.res&&S.c.res.related)||[];const ty=rel.length?TYPE_KO[PM[rel[0]].t]:'';
+   return `AI가 이 문장을 판매하지 않는 상품 요청으로 판단했고 같은 ${ty} 종류인 ${rel.map(pn).join(', ')} 상품을 Similar items로 보여 줍니다.`})},
+ {id:'b3',name:'같은 종류 판매 중 표시',kind:'ai',role:'운영 담당',tab:'관리자',target:'same-kind-badge',page:()=>'#/inbox',
+  enter:c=>{if(!c.k)c.k=(rowByQ('kelp sheet mask, is it sold here')||{}).id},
+  cur:c=>H('same-kind-badge',()=>{const t=q1(`#con tr.rw[data-id="${c.k}"] td:nth-child(4) .tag.warn`);return t?t.parentElement:null},'',()=>{const r=rowOf(c.k);
+   return `${r.auto.by==='AI'?'AI가':'규칙이'} 「${r.q}」를 판매 안 함으로 판단했지만 같은 종류인 ${pn(sameType(r)[0])} 상품이 판매 중이라 이 표시가 붙었습니다.`})},
+ {id:'b4',name:'다른 상품으로 판단',kind:'human',role:'운영 담당',tab:'관리자',target:'judgment-save',page:()=>'#/inbox',
+  cur:c=>{const exp=sameType(rowOf(c.k))[0];
+   if(S.ui.open!==c.k)return H('row-judge',()=>judgeBtn(c.k),'판단',()=>`이 줄을 직접 판단하려고 #${c.k} 줄의 [판단]을 눌러 상세를 엽니다.`);
+   if((S.ui.draft||{}).k!=='prod')return H('judge-other',()=>q1('.drawer .seg [data-act=jk][data-k=prod]'),'다른 상품',()=>'고객이 대신 살 만한 판매 상품이 있으니 [다른 상품]을 고릅니다.');
+   return H('judgment-save',()=>q1('.drawer [data-act=jsave]'),'저장',()=>`연결 상품이 ${pn(exp)} 상품인지 보고 [저장]을 누릅니다.`,{guard:()=>(S.ui.draft||{}).pid===exp,guardMsg:`이 시나리오는 연결 상품 ${pn(exp)} 기준이라 그 상품을 고른 뒤 저장합니다.`})},
+  done:c=>{const r=rowOf(c.k);return !!(r.staff&&r.staff.k==='prod'&&r.staff.pid===sameType(r)[0])},
+  after:c=>{const r=rowOf(c.k);return `#${r.id} 줄이 다른 상품 ${pn(r.staff.pid)} 상품으로 저장${r.keepWant?`되고 입점 수요 ${r.keepWant}도 함께 남았습니다.`:'됐습니다.'}`}},
+ {id:'b5',name:'MD 요청서로 묶기',kind:'human',role:'운영 담당',tab:'관리자',target:'bundle-md',page:()=>'#/inbox',
+  enter:c=>{if(!c.picks){const k=rowOf(c.k);const b=S.log.find(r=>r.id!==k.id&&r.st==='ok'&&r.staff&&r.staff.k==='gap'&&r.staff.want===k.keepWant&&!r.mdReq);c.picks=[k.id,...(b?[b.id]:[])]}},
+  cur:c=>{if(S.ui.open)return H('drawer-close',()=>q1('.drawer .dh [data-act=close]'),'닫기',()=>'판단을 저장했으니 상세 창을 닫고 표로 돌아갑니다.');
+   return checkSub(c,c.picks,(id,k)=>k===0?`방금 판단한 #${id} 줄을 MD 요청서 근거로 체크합니다.`:`같은 ${rowOf(c.k).keepWant}를 찾다 판매 안 함으로 확인된 #${id} 줄도 체크합니다.`)
+    ||H('bundle-md',()=>act('bundle','[data-t=MD]'),'MD 요청서로 묶기',()=>`판매 여부는 MD가 정하므로 체크한 ${c.picks.length}줄을 [MD 요청서로 묶기]로 묶습니다.`)},
+  done:c=>{const r=S.reqs.find(x=>x.type==='MD'&&x.ev.some(e=>e.lid===c.k));if(r)c.req=r.id;return !!r},
+  after:c=>`${c.req} 요청서가 요청 ${evN(reqBy(c.req))}건을 근거로 만들어졌습니다.`},
+ {id:'b6',name:'우선순위와 등록',kind:'human',role:'운영 담당',tab:'관리자',target:'register',page:reqPage,
+  cur:regCur('보통','Brand F Kelp Mask 판매 문의가 반복됨',r=>`요청 ${evN(r)}건이 모인 판매 검토라 우선순위를 [보통]으로 고릅니다.`),
+  done:c=>reqBy(c.req).st==='reg',
+  after:c=>{const r=reqBy(c.req);return `${r.id} 요청서가 우선순위 ${r.pri}으로 등록되어 PI 담당이 처리할 차례가 됐습니다.`}},
+ {id:'b7',name:'MD에게 전달',kind:'human',role:'PI 담당',tab:'관리자',target:'send-md',page:reqPage,
+  cur:c=>S.role!=='pi'?H('go-pi',()=>act('gopi'),'PI 담당으로 전환해 MD 전달',()=>'MD 전달은 PI 담당 일이라 [PI 담당으로 전환해 MD 전달]로 역할을 바꿉니다.')
+   :H('send-md',()=>act('rsend'),'MD에게 전달',()=>'MD는 콘솔을 쓰지 않아 PI 담당이 [MD에게 전달]로 요청서를 넘깁니다.'),
+  done:c=>reqBy(c.req).st==='sent',
+  after:c=>`${c.req} 요청서가 MD에게 전달됨 상태로 바뀌었습니다.`},
+ ]},
+C:{title:'틀린 반영을 막는 장치',time:'약 1분',desc:'고객이 거절한 줄과 너무 짧은 검색어 조각이 사전으로 들어가기 전에 어디서 멈추는지 봅니다.',
+ end:c=>'고객이 거절한 줄은 일괄 확인에서 빠지고 두 글자 조각은 검색어 후보에 들어가지 못합니다.',
+ steps:[
+ {id:'c1',name:'오타 검색과 거절',kind:'human',role:'고객',tab:'고객',target:'not-this',
+  cur:c=>{if(!searched(2,c))return H('example-typo',()=>preset(2),PRE(2),()=>`중문 고객이 오타가 섞인 「${PRE(2)}」로 검색합니다.`);
+   const r=S.c.res;return H('not-this',()=>q1('#screen [data-act=notthis]'),'不是这个',()=>`${r.by==='AI'?'AI가':'규칙이'} 고른 ${pn(r.pid)} 상품이 고객이 찾던 것이 아니라서 고객이 [不是这个]를 누릅니다.`)},
+  done:c=>searched(2,c)&&rowOf(c.row).react==='no',
+  after:c=>`접수 #${c.row} 줄에 고객 아님 표시가 남았습니다.`},
+ {id:'c2',name:'일괄 확인에서 빠지는 줄',kind:'human',role:'운영 담당',tab:'관리자',target:'bulk-confirm',page:()=>'#/inbox',
+  enter:c=>{if(!c.k)c.k=(rowByQ('serum in a blue bottle')||{}).id},
+  cur:c=>{const r=rowOf(c.k);const why=[r.react==='no'?'고객이 제안을 거절했고':'',rowConflict(r)?'문장의 색도 상품과 다르지만':''].filter(Boolean).join(' ');
+   return S.ui.sel.includes(c.k)?H('bulk-confirm',()=>act('bconfirm'),'선택 확인',()=>'이 줄이 자동 판단대로 맞음 처리되는지 [선택 확인]을 눌러 봅니다.')
+    :H('row-check',()=>cb(c.k),`#${c.k} 체크`,()=>`「${r.q}」 줄은 ${why||'직접 판단할 줄이지만'} 일괄 확인에 넣어 보려고 체크합니다.`)},
+  done:c=>{const w=S.ui.blk&&S.ui.blk[c.k];if(w&&rowOf(c.k).st==='new'){c.why=w;return true}return false},
+  after:c=>`#${c.k} 줄은 「${c.why}」 사유로 일괄 확인에서 빠지고 검토 전으로 남았습니다.`},
+ {id:'c3',name:'두 글자 조각 차단',kind:'human',role:'운영 담당',tab:'관리자',target:'keyword-add',page:()=>'#/inbox',
+  enter:c=>{if(!c.k3)c.k3=(rowByQ('飞机上用的小套')||{}).id},
+  cur:c=>{if(S.ui.open!==c.k3)return H('row-judge',()=>judgeBtn(c.k3),'판단',()=>`「${rowOf(c.k3).q}」 줄의 [판단]을 열어 검색어 후보를 직접 더해 봅니다.`);
+   const v=(q1('#kwin')||{}).value;
+   if((v||'').trim()!=='飞机')return H('keyword-input',()=>q1('#kwin'),'검색어 추가 칸',()=>'검색어 추가 칸에 「飞机」를 적습니다.',{input:true,fill:'飞机'});
+   return H('keyword-add',()=>act('kwadd'),'추가',()=>'[추가]를 눌러 이 말이 검색어 후보가 되는지 봅니다.',{guard:()=>((q1('#kwin')||{}).value||'').trim()==='飞机',guardMsg:'이 시나리오는 「飞机」 기준이라 칸에 그 말을 적은 뒤 누릅니다.'})},
+  done:c=>{if(S.ui.open===c.k3&&/^추가 불가/.test(S.ui.kwerr||'')){c.why=S.ui.kwerr.replace(/^추가 불가 · /,'');return true}return false},
+  after:c=>`「飞机」는 「${c.why}」 사유로 검색어 후보에 들어가지 않았습니다.`},
+ ]},
+};
+
+/* ---------- 상태 ---------- */
+let G={on:false,scen:null,i:0,c:{},view:null};
+let cur=null,lastEl=null,missSince=0,running=false,replay=false,autoClick=false,snap=null,snapSt=null,lastBub='';
+const shown=[];const note=t=>{if(t&&!shown.includes(t))shown.push(t)};
+const steps=()=>G.scen&&SCEN[G.scen]?SCEN[G.scen].steps:[];
+const step=()=>G.on&&!G.view?steps()[G.i]||null:null;
+const persist=()=>store.set({on:G.on,scen:G.scen,i:G.i,c:G.c,view:G.view});
+const els=sub=>{if(!sub)return [];const r=sub.el();return (Array.isArray(r)?r:[r]).filter(vis)};
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+function setUrl(m){try{const u=new URL(location.href);u.searchParams.set('mode',m);history.replaceState(null,'',u.pathname+u.search+location.hash)}catch(e){}}
+
+/* ---------- 화면 요소 ---------- */
+const ui={};
+function mk(tag,cls,html){const e=document.createElement(tag);e.className=cls+' g-ui';if(html!=null)e.innerHTML=html;return e}
+function mountBase(){
+ if(!ui.mode){ui.mode=mk('div','g-mode');ui.mode.setAttribute('role','group');ui.mode.setAttribute('aria-label','보기 방식');
+  ui.mode.innerHTML='<button type="button" data-g="toguide">가이드로 보기</button><button type="button" data-g="tofree">자유 체험</button>';
+  q1('#reset').after(ui.mode)}
+ if(!ui.toast){ui.toast=mk('div','g-toast');ui.toast.setAttribute('role','status');document.body.appendChild(ui.toast)}
+ if(!ui.banner){ui.banner=mk('div','g-banner');ui.banner.setAttribute('aria-live','polite');document.body.appendChild(ui.banner)}
+ syncMode();
+}
+function syncMode(){if(!ui.mode)return;const [g,f]=ui.mode.querySelectorAll('button');g.setAttribute('aria-pressed',String(G.on));f.setAttribute('aria-pressed',String(!G.on))}
+function mountLayer(){
+ if(!ui.bar){ui.bar=mk('div','g-bar');q1('.top').appendChild(ui.bar)}
+ if(!ui.hole){ui.hole=mk('div','g-hole');ui.hole.setAttribute('aria-hidden','true');document.body.appendChild(ui.hole)}
+ if(!ui.bub){ui.bub=mk('div','g-bub');ui.bub.setAttribute('role','dialog');ui.bub.setAttribute('aria-live','polite');document.body.appendChild(ui.bub)}
+ chromeH();
+}
+function unmountLayer(){['bar','hole','bub','modal'].forEach(k=>{if(ui[k]){ui[k].remove();ui[k]=null}});document.querySelectorAll('[data-guide]').forEach(e=>e.removeAttribute('data-guide'));lastBub='';chromeH()}
+let tt;function toast(m){if(!m||!ui.toast)return;note(m);ui.toast.textContent=m;ui.toast.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>ui.toast.classList.remove('on'),2600);placeToast()}
+function placeToast(){if(!ui.toast)return;const s=ui.bub&&ui.bub.classList.contains('sheet')&&!ui.bub.classList.contains('top')&&ui.bub.style.display!=='none'?ui.bub.offsetHeight:0;ui.toast.style.bottom=(s?s+10:24)+'px'}
+let bt;function banner(m){if(!ui.banner)return;note(m);ui.banner.textContent=m;ui.banner.classList.add('on');clearTimeout(bt);bt=setTimeout(()=>ui.banner.classList.remove('on'),1500)}
+function renderBar(){
+ if(!ui.bar)return;const sc=SCEN[G.scen];if(!sc){ui.bar.innerHTML='';return}const st=steps();
+ ui.bar.innerHTML=`<span class="g-sn">시나리오 ${G.scen}</span><span class="g-st">${esc(sc.title)}</span><ol class="g-dots" aria-label="진행">${st.map((s,i)=>`<li class="${i<G.i?'done':i===G.i?'on':''}" title="${i+1}. ${esc(s.name)} · ${esc(s.role)}" aria-label="${i+1}단계 ${esc(s.name)} ${esc(s.role)}"></li>`).join('')}</ol><span class="g-pos">${Math.min(G.i+1,st.length)} / ${st.length}</span><span class="g-sp"></span><button type="button" data-g="restart" title="R">처음부터</button><button type="button" data-g="skip" title="이 단계의 실제 버튼을 대신 눌러 다음 단계로 넘어갑니다">건너뛰기</button><button type="button" data-g="off" title="Esc">가이드 끄기</button>`;
+}
+function renderBub(){
+ const st=step();if(!ui.bub)return;
+ if(!st||!cur){ui.bub.style.display='none';ui.hole.style.display='none';lastBub='';return}
+ const text=cur.before();const role=st.role;const ai=st.kind==='ai';
+ const key=[G.scen,G.i,cur.target,text].join('|');
+ ui.bub.style.display='';
+ if(key===lastBub)return;lastBub=key;note(text);
+ const rc=role==='운영 담당'?'r-ops':role==='PI 담당'?'r-pi':'';
+ const aux=st.kind==='human'?`<span>${cur.input?'이 칸에 직접 적으면 진행합니다':'이 버튼을 눌러 진행합니다'}</span>`:`<button type="button" class="g-next" data-g="next">${ai?'확인했어요':'다음'}</button>`;
+ ui.bub.className='g-bub g-ui'+(ai?' ai':'')+(sheet()?' sheet'+(sheetTop?' top':''):'');ui.hole.className='g-hole g-ui'+(ai?' ai':'');
+ ui.bub.setAttribute('aria-label',`${role} 단계 안내`);
+ ui.bub.innerHTML=`<div class="g-bh"><span class="g-chip ${rc}">${esc(role)}</span>${ai?`<span class="g-chip k-ai">${esc(st.badge||'AI 판단')}</span>`:st.kind==='system'?'<span class="g-chip">시스템</span>':''}<span class="g-n">${G.i+1} / ${steps().length}</span></div><p>${esc(text)}</p><div class="g-aux">${aux}</div>`;
+}
+
+/* ---------- 위치 ---------- */
+const sheet=()=>innerWidth<=760;
+let sheetTop=false,nudged=0;
+function clipRect(el){
+ const b=el.getBoundingClientRect();let r={l:b.left,t:b.top,r:b.right,b:b.bottom};
+ for(let p=el.parentElement;p&&p!==document.body&&p!==document.documentElement;p=p.parentElement){const cs=getComputedStyle(p);if(/(auto|scroll|hidden|clip)/.test(cs.overflowX+cs.overflowY)){const q=p.getBoundingClientRect();r={l:Math.max(r.l,q.left),t:Math.max(r.t,q.top),r:Math.min(r.r,q.right),b:Math.min(r.b,q.bottom)}}}
+ r={l:Math.max(r.l,0),t:Math.max(r.t,0),r:Math.min(r.r,innerWidth),b:Math.min(r.b,innerHeight)};
+ return r.r>r.l&&r.b>r.t?r:null;
+}
+function unionRect(es){let u=null;es.forEach(e=>{const r=clipRect(e);if(!r)return;u=u?{l:Math.min(u.l,r.l),t:Math.min(u.t,r.t),r:Math.max(u.r,r.r),b:Math.max(u.b,r.b)}:r});return u}
+const sheetH=()=>ui.bub?ui.bub.offsetHeight:0;
+function fully(el){const b=el.getBoundingClientRect();const r=clipRect(el);if(!r)return false;const lim=sheet()?innerHeight-sheetH():innerHeight;return Math.abs(r.l-Math.max(b.left,0))<2&&Math.abs(r.t-b.top)<2&&Math.abs(r.r-b.right)<2&&Math.abs(r.b-b.bottom)<2&&b.bottom<=lim-6}
+function scrollParent(el){for(let p=el.parentElement;p;p=p.parentElement){const cs=getComputedStyle(p);if(/(auto|scroll)/.test(cs.overflowY)&&p.scrollHeight>p.clientHeight+1)return p}return null}
+function bringIn(el){
+ el.scrollIntoView({block:'center',inline:'nearest'});
+ if(sheet())lift(el);
+}
+/* 휴대폰 너비: 아래 시트에 가리면 대상을 위로 올리고, 더 못 올리면 시트를 화면 위쪽으로 옮긴다 */
+function lift(el){
+ const top=innerHeight-sheetH()-8;let b=el.getBoundingClientRect();
+ if(b.bottom<=top)return;
+ const d=Math.min(b.bottom-top,b.top-8);if(d<=0)return;
+ const sp=scrollParent(el);if(sp)sp.scrollTop+=d;
+ b=el.getBoundingClientRect();if(b.bottom>top)window.scrollBy(0,Math.min(b.bottom-top,b.top-8));
+}
+let liveEls=[];
+function place(){
+ requestAnimationFrame(place);
+ const st=step();if(!st||!cur||!ui.hole){liveEls=[];return}
+ const es=els(cur);liveEls=es;
+ if(!es.length){ui.hole.style.display='none';ui.bub.style.display='none';return}
+ if(es[0]!==lastEl){lastEl=es[0];nudged=0;sheetTop=false;if(!fully(es[0]))bringIn(es[0])}
+ else if(sheet()&&nudged<3&&!fully(es[0])){nudged++;bringIn(es[0])}
+ const r=unionRect(es);
+ if(!r){ui.hole.style.display='none';return}
+ const pad=4;Object.assign(ui.hole.style,{display:'',left:r.l-pad+'px',top:r.t-pad+'px',width:r.r-r.l+pad*2+'px',height:r.b-r.t+pad*2+'px'});
+ ui.bub.style.display='';
+ if(sheet()){
+  const sh=sheetH();const want=r.b>innerHeight-sh-8&&r.t>=sh+8;
+  if(want!==sheetTop)sheetTop=want;
+  ui.bub.classList.add('sheet');ui.bub.classList.toggle('top',sheetTop);placeToast();return}
+ ui.bub.classList.remove('sheet','top');
+ const bw=ui.bub.offsetWidth,bh=ui.bub.offsetHeight,m=12,vw=innerWidth,vh=innerHeight;
+ const T={l:r.l-pad,t:r.t-pad,r:r.r+pad,b:r.b+pad};
+ const cl=(v,a,b)=>Math.min(Math.max(v,a),b);
+ const cands=[[cl(T.l,8,vw-bw-8),T.b+m],[cl(T.l,8,vw-bw-8),T.t-m-bh],[T.r+m,cl(T.t,8,vh-bh-8)],[T.l-m-bw,cl(T.t,8,vh-bh-8)],[vw-bw-16,vh-bh-16],[16,vh-bh-16],[vw-bw-16,70],[16,70]];
+ const ok=([x,y])=>x>=8&&y>=8&&x+bw<=vw-8&&y+bh<=vh-8&&(x+bw<=T.l||x>=T.r||y+bh<=T.t||y>=T.b);
+ const [x,y]=cands.find(ok)||[cl((vw-bw)/2,8,vw-bw-8),vh-bh-12];
+ ui.bub.style.left=x+'px';ui.bub.style.top=y+'px';
+}
+
+/* ---------- 진행 ---------- */
+function ensure(st,force){
+ if(!st)return;
+ const want=st.tab==='고객'?'c':'a';
+ if(isNarrow()&&S.ui.mv!==want)setView(want);
+ if(S.ui.menu){S.ui.menu=false;renderConsole()}
+ const pg=st.page?st.page(G.c):null;
+ if(pg&&!location.hash.startsWith(pg)){location.hash=pg;return}
+ if(pg==='#/inbox'){const u=S.ui;if(u.tab!=='all'||u.q||u.ch||u.au){u.tab='all';u.q='';u.ch='';u.au='';u.keepScroll=true;renderConsole()}}
+ if(force&&pg&&pg.startsWith('#/requests/')&&Object.keys(S.ui.csec||{}).length){S.ui.csec={};renderConsole()}
+}
+function enter(){
+ const st=step();if(!st)return;
+ if(st.enter)st.enter(G.c);
+ const prev=G.i>0?steps()[G.i-1].role:null;
+ ensure(st,false);
+ if(!replay&&st.role!==prev)banner(`${st.role} 차례입니다`);
+ lastEl=null;snap=kpiNow();snapSt=Object.fromEntries(S.log.map(r=>[r.id,r.st]));
+ persist();renderBar();tick();
+}
+function tick(){
+ if(!G.on||G.view||running)return;
+ const st=step();if(!st)return;
+ if(st.kind==='human'&&st.done(G.c)){complete();return}
+ cur=st.cur(G.c)||null;
+ const es=els(cur);
+ document.querySelectorAll('[data-guide]').forEach(e=>{if(!es.includes(e))e.removeAttribute('data-guide')});
+ es.forEach(e=>{if(e.dataset.guide!==cur.target)e.setAttribute('data-guide',cur.target)});
+ if(!es.length){const t=Date.now();if(!missSince)missSince=t;else if(t-missSince>700){missSince=t;ensure(st,true)}}else missSince=0;
+ renderBub();
+}
+function complete(){
+ const st=step();if(!st)return;
+ const msg=st.after?st.after(G.c):'';
+ if(!replay){toast(msg);flash()}
+ advance();
+}
+function advance(){
+ G.i++;cur=null;lastEl=null;
+ if(G.i>=steps().length){G.view='end';persist();renderBar();renderBub();if(!replay)setTimeout(()=>{if(G.view==='end')showEnd()},1900);else showEnd();return}
+ enter();
+}
+function flash(){
+ const a=snap,b=snapSt;
+ setTimeout(()=>{const now=kpiNow();const ks=[...document.querySelectorAll('#con .kpi')];
+  now.forEach((v,i)=>{const k=ks[i];if(!a||v===a[i]||!k)return;k.classList.add('g-flash');countUp(k.querySelector('b'),a[i],v);setTimeout(()=>k.classList.remove('g-flash'),800)});
+  S.log.forEach(r=>{if(!b||b[r.id]===r.st)return;const t=q1(`#con tr.rw[data-id="${r.id}"]`);if(t){t.classList.add('g-flash');setTimeout(()=>t.classList.remove('g-flash'),800)}})},60);
+}
+function countUp(el,from,to){if(!el)return;const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800);if(!el.isConnected)return;el.textContent=String(Math.round(from+(to-from)*(1-Math.pow(1-p,3))));if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
+const schedule=()=>{[30,160,420].forEach(ms=>setTimeout(tick,ms))};
+
+/* 처음 상태로: 기존 초기화 버튼을 두 번 누른 것과 같다 */
+function resetApp(){autoClick=true;try{const b=q1('#reset');b.click();b.click()}finally{autoClick=false}}
+/* 한 단계를 실제 버튼으로 채운다 ([건너뛰기], ← 키) */
+async function autoStep(){
+ const st=step();if(!st)return false;
+ if(st.kind!=='human'){advance();await wait(40);return true}
+ for(let k=0;k<24&&!st.done(G.c);k++){
+  cur=st.cur(G.c);const es=els(cur);
+  if(!es.length){ensure(st,true);await wait(140);continue}
+  const el=es[0];
+  if(cur.input){el.value=cur.fill;el.dispatchEvent(new Event('input',{bubbles:true}));if(document.activeElement===el)el.blur()}
+  else{autoClick=true;try{el.click()}finally{autoClick=false}}
+  await wait(90);
+ }
+ if(!st.done(G.c))return false;
+ complete();await wait(60);return true;
+}
+async function replayTo(n){
+ if(running)return;running=true;replay=true;
+ try{resetApp();G.c={};G.i=0;G.view=null;hideModal();enter();await wait(60);
+  for(let k=0;k<n;k++){if(!(await autoStep()))break}}
+ finally{replay=false;running=false}
+ lastBub='';enter();
+}
+async function skip(){
+ if(running||!step())return;running=true;
+ try{const ok=await autoStep();if(!ok)toast('이 단계는 지금 화면에서 대신 진행할 수 없어 직접 눌러야 합니다.')}finally{running=false}
+ schedule();
+}
+function next(){const st=step();if(!st||st.kind==='human'||running)return;advance()}
+function startScen(k){
+ G={on:true,scen:k,i:0,c:{},view:null};hideModal();resetApp();setUrl('guide');mountLayer();syncMode();enter();
+}
+function guideOff(){G={on:false,scen:null,i:0,c:{},view:null};cur=null;persist();unmountLayer();syncMode();setUrl('free')}
+
+/* ---------- 시작 화면과 종료 화면 ---------- */
+function hideModal(){if(ui.modal){ui.modal.remove();ui.modal=null}}
+function showStart(){
+ G={on:true,scen:null,i:0,c:{},view:'start'};persist();mountLayer();renderBar();renderBub();syncMode();hideModal();
+ ui.modal=mk('div','g-modal');ui.modal.setAttribute('role','dialog');ui.modal.setAttribute('aria-modal','true');ui.modal.setAttribute('aria-labelledby','g-st-h');
+ ui.modal.innerHTML=`<div class="g-card"><div class="g-ch"><h2 id="g-st-h">어떤 장면부터 볼지 고릅니다</h2><button type="button" class="g-x" data-g="free" aria-label="닫고 자유 체험으로">×</button></div>
+ <p class="g-sub">각 단계에서 밝게 표시된 실제 버튼을 직접 눌러야 다음 단계로 넘어갑니다.</p>
+ <div class="g-scs">${Object.entries(SCEN).map(([k,s],i)=>`<button type="button" class="g-sc ${i?'':'main'}" data-g="start" data-s="${k}"><span class="g-tag ${i?'plain':''}">${i?'시나리오 '+k:'시나리오 A 추천'}</span><b>${esc(s.title)}</b><span>${esc(s.desc)}</span><span class="g-meta">${s.steps.length}단계 ${esc(s.time)}</span></button>`).join('')}</div>
+ <div class="g-foot"><span class="g-note">가상 데이터 · 개인 제안 · 현대면세점 공식 서비스 아님</span><button type="button" class="g-btn" data-g="free">자유 체험으로</button></div></div>`;
+ document.body.appendChild(ui.modal);setTimeout(()=>ui.modal&&ui.modal.querySelector('.g-sc.main')?.focus(),0);
+}
+function showEnd(){
+ const sc=SCEN[G.scen];if(!sc)return;G.view='end';persist();renderBar();renderBub();hideModal();const t=sc.end(G.c);note(t);
+ ui.modal=mk('div','g-modal light');ui.modal.setAttribute('role','dialog');ui.modal.setAttribute('aria-modal','true');ui.modal.setAttribute('aria-labelledby','g-end-h');
+ ui.modal.innerHTML=`<div class="g-card g-end"><div class="g-ch"><h2 id="g-end-h">시나리오 ${G.scen} 끝</h2><button type="button" class="g-x" data-g="freekeep" aria-label="닫고 자유 체험으로">×</button></div><p class="g-endt">${esc(t)}</p>
+ <div class="g-foot"><button type="button" class="g-btn" data-g="others">다른 시나리오</button><button type="button" class="g-btn pri" data-g="freekeep">자유 체험으로</button></div></div>`;
+ document.body.appendChild(ui.modal);setTimeout(()=>ui.modal&&ui.modal.querySelector('.g-btn.pri')?.focus(),0);
+}
+
+/* ---------- 가이드 버튼 ---------- */
+document.addEventListener('click',e=>{
+ const b=e.target.closest('[data-g]');if(!b||!b.closest('.g-ui'))return;
+ const g=b.dataset.g;
+ if(g==='start')startScen(b.dataset.s);
+ else if(g==='free'){hideModal();guideOff()}
+ else if(g==='freekeep'){hideModal();guideOff()}
+ else if(g==='others'){hideModal();resetApp();showStart()}
+ else if(g==='next')next();
+ else if(g==='skip')skip();
+ else if(g==='restart'&&G.scen)replayTo(0);
+ else if(g==='off')guideOff();
+ else if(g==='toguide'){if(!G.on){resetApp();setUrl('guide');showStart()}}
+ else if(g==='tofree'){if(G.on){hideModal();resetApp();guideOff()}}
+});
+
+/* ---------- 대상 밖 결정 막기 ----------
+   읽기 동작(줄 열기·닫기, 탭·메뉴 이동, 접힘·상세 보기, 스크롤)은 그대로 둔다 */
+const READ=new Set(['open','close','csec','goack','dlog','view','itab','dtab','rtab','hmaj','ropen','unhide','menu','impd']);
+const stop=e=>{e.preventDefault();e.stopPropagation();e.stopImmediatePropagation()};
+const lbl=()=>{const st=step();return !st?'':st.kind==='ai'?'확인했어요':st.kind==='system'?'다음':(cur&&cur.label)||''};
+const blockMsg=()=>G.view==='end'||!step()?'이 시나리오는 끝났고 다른 결정은 자유 체험에서 해 볼 수 있습니다.':`이 시나리오는 [${lbl()}] 기준이라 다른 결정은 자유 체험에서 해 볼 수 있습니다.`;
+const inside=(list,el)=>list.some(t=>t&&(t===el||t.contains(el)));
+window.addEventListener('click',e=>{
+ if(!G.on||autoClick)return;
+ if(e.target.closest('.g-ui'))return;
+ if(running){stop(e);return}
+ if(e.target.closest('#reset')){stop(e);toast('가이드 중에는 위쪽 [처음부터]로 다시 시작합니다.');return}
+ const el=e.target.closest('[data-act]');if(!el)return;
+ if(cur&&step()){
+  /* 체크 상자는 click 시점에 이미 값이 바뀌어 있으므로 직전 화면에서 잡아 둔 대상과도 비교한다 */
+  if(inside([...liveEls,...els(cur)],el)){if(cur.guard&&!cur.guard()){stop(e);toast(cur.guardMsg);return}schedule();return}
+  if(cur.extra&&inside(cur.extra(),el)){schedule();return}
+ }
+ if(READ.has(el.dataset.act)){schedule();return}
+ stop(e);toast(blockMsg());
+},true);
+window.addEventListener('submit',e=>{if(!G.on||autoClick)return;if(e.target.dataset.form==='search'){stop(e);toast(blockMsg())}},true);
+const ALLOW_IN=new Set(['iq','dq','hq','jwant','gsq','kwin']);
+window.addEventListener('input',e=>{
+ if(!G.on||autoClick)return;const t=e.target;if(!t.closest||!t.closest('#con'))return;
+ if(t.id==='rwhy'&&cur&&cur.target==='reason'){schedule();return}
+ if(ALLOW_IN.has(t.id)){schedule();return}
+ e.stopImmediatePropagation();S.ui.keepScroll=true;renderConsole();toast(blockMsg());
+},true);
+window.addEventListener('change',e=>{
+ if(!G.on||autoClick)return;const t=e.target;if(!t.closest||!t.closest('#con'))return;
+ const a=t.dataset.act;
+ if(a==='kwtg'||a==='ttg'||['elang','ematch','etg'].includes(t.id)){e.stopImmediatePropagation();S.ui.keepScroll=true;renderConsole();toast(blockMsg());return}
+ schedule();
+},true);
+window.addEventListener('keydown',e=>{
+ if(!G.on)return;const t=e.target;
+ if(G.view){if(e.key==='Escape'){stop(e);hideModal();guideOff()}return}
+ if(e.key==='Enter'&&t&&['kwin','tin','eterm','jwant','rejwhy'].includes(t.id)){
+  if(t.id==='kwin'&&cur&&cur.target==='keyword-add'){schedule();return}
+  stop(e);toast(blockMsg());return}
+ const typing=t&&(t.tagName==='TEXTAREA'||t.tagName==='SELECT'||(t.tagName==='INPUT'&&!['checkbox','radio','button','submit'].includes(t.type))||t.isContentEditable);
+ if(typing||e.metaKey||e.ctrlKey||e.altKey)return;
+ if(e.key==='ArrowRight'){const st=step();if(st&&st.kind!=='human'){e.preventDefault();next()}}
+ else if(e.key==='ArrowLeft'){if(G.scen&&G.i>0){e.preventDefault();replayTo(G.i-1)}}
+ else if(e.key==='r'||e.key==='R'){if(G.scen){e.preventDefault();replayTo(0)}}
+ else if(e.key==='Escape'){guideOff()}
+},true);
+window.addEventListener('hashchange',schedule);
+window.addEventListener('resize',()=>{lastEl=null;schedule()});
+setInterval(tick,400);
+
+/* 시험용 읽기 창 */
+window.__guide={
+ info:()=>{const st=step();return {on:G.on,view:G.view,scen:G.scen,i:G.i,n:steps().length,kind:st&&st.kind,stepTarget:st&&st.target,role:st&&st.role,target:cur&&cur.target,label:cur&&cur.label,input:!!(cur&&cur.input),fill:cur&&cur.fill,text:cur&&step()?cur.before():'',running}},
+ el:()=>els(cur)[0]||null,
+ els:()=>els(cur),
+ rect:()=>{const es=els(cur);const r=unionRect(es);const b=ui.bub&&ui.bub.style.display!=='none'?ui.bub.getBoundingClientRect():null;return {t:r,b:b&&{l:b.left,t:b.top,r:b.right,b:b.bottom}}},
+ texts:()=>shown.slice(),
+ data:()=>Object.fromEntries(Object.entries(SCEN).map(([k,s])=>[k,{title:s.title,steps:s.steps.map(x=>({id:x.id,kind:x.kind,role:x.role,tab:x.tab,target:x.target,name:x.name}))}])),
+};
+
+/* ---------- 시작 ---------- */
+mountBase();
+const mode=new URLSearchParams(boot.search).get('mode');
+const hashLink=/^#\/./.test(boot.hash||'');
+const saved=store.get();
+if(mode==='free'){/* 자유 체험 */}
+else if(mode==='guide'||(!hashLink&&!mode)){
+ if(mode==='guide'&&saved&&saved.on&&saved.scen&&SCEN[saved.scen]){
+  if(!hadState)startScen(saved.scen);
+  else{G={on:true,scen:saved.scen,i:saved.i||0,c:saved.c||{},view:saved.view==='end'?'end':null};mountLayer();syncMode();if(G.view==='end')showEnd();else enter()}
+ }else showStart();
+}
+place();
+})();
 </script>
 </body>
 </html>
